@@ -8,6 +8,8 @@ import router from './Routes/Router';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <div className='font-montserrat'>
+      <RouterProvider router={router} />
+    </div>
   </React.StrictMode>,
 )

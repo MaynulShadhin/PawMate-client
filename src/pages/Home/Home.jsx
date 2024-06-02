@@ -1,8 +1,13 @@
+import Banner from "./Components/Banner";
+import CallToAction from "./Components/Call to action/CallToAction";
+import PetCategory from "./Components/Pet Category/PetCategory";
 
 const Home = () => {
     return (
         <div>
-            <div className="text-red-500">I Am home</div>
+            <Banner></Banner>
+            <PetCategory></PetCategory>
+            <CallToAction></CallToAction>
         </div>
     );
 };
