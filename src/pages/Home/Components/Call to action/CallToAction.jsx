@@ -16,7 +16,7 @@ import { Link } from 'react-router-dom';
 
 const CallToAction = () => {
     return (
-        <div className='bg-[#F07C3D] bg-opacity-10 py-8 mb-28'>
+        <div className='bg-[#F07C3D] bg-opacity-5 py-8 mb-28'>
             <h2 className="text-4xl text-center font-semibold mb-12">Call to Action</h2>
             <div>
                 <div className="my-12 mx-auto container text-center">

@@ -35,32 +35,32 @@ const PetCategory = () => {
                     <SwiperSlide>
                         <Link>
                             <img src={cat} alt="" />
-                            <h2 className='absolute flex items-center justify-center z-10 text-white top-5 text-3xl font-bold bg-white bg-opacity-15 px-10'>Cat</h2>
+                            <h2 className='absolute flex items-center justify-center z-10 text-white top-5 text-xl md:text-3xl font-bold bg-white bg-opacity-15 px-10'>Cat</h2>
                         </Link>
                     </SwiperSlide>
 
                     <SwiperSlide>
                         <Link>
                             <img src={dog} alt="" />
-                            <h2 className='absolute flex items-center justify-center z-10 text-white top-5 text-3xl font-bold bg-black bg-opacity-15 px-10'>Dog</h2>
+                            <h2 className='absolute flex items-center justify-center z-10 text-white top-5 text-xl md:text-3xl font-bold bg-black bg-opacity-15 px-10'>Dog</h2>
                         </Link>
                     </SwiperSlide>
                     <SwiperSlide>
                         <Link>
                             <img src={rabbit} alt="" />
-                            <h2 className='absolute flex items-center justify-center z-10 text-white top-5 text-3xl font-bold bg-white bg-opacity-15 px-10'>Rabbit</h2>
+                            <h2 className='absolute flex items-center justify-center z-10 text-white top-5 text-xl md:text-3xl font-bold bg-white bg-opacity-15 px-10'>Rabbit</h2>
                         </Link>
                     </SwiperSlide>
                     <SwiperSlide>
                         <Link>
                             <img className='' src={fish} alt="" />
-                            <h2 className='absolute flex items-center justify-center z-10 text-white top-5 text-3xl font-bold bg-white bg-opacity-15 px-10'>Fish</h2>
+                            <h2 className='absolute flex items-center justify-center z-10 text-white top-5 text-xl md:text-3xl font-bold bg-white bg-opacity-15 px-10'>Fish</h2>
                         </Link>
                     </SwiperSlide>
                     <SwiperSlide>
                         <Link>
                             <img src={horse} alt="" />
-                            <h2 className='absolute flex items-center justify-center z-10 text-white top-5 text-3xl font-bold bg-white bg-opacity-15 px-10'>Horse</h2>
+                            <h2 className='absolute flex items-center justify-center z-10 text-white top-5 text-xl md:text-3xl font-bold bg-white bg-opacity-15 px-10'>Horse</h2>
                         </Link>
                     </SwiperSlide>
 
