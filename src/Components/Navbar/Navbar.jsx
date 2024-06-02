@@ -1,6 +1,6 @@
 import { useState } from "react";
 import logo from '../../assets/logo.png'
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import Dropdown from "./Components/Dropdown";
 
 const Navbar = () => {
@@ -59,7 +59,9 @@ const Navbar = () => {
                     >
                         <div className="flex flex-col md:flex-row md:mx-6 lg:space-x-10 space-y-2 lg:space-y-0">
                             {navLinks}
-                            <button className="border border-[#F07C3D] px-4 w-32 lg:w-auto py-1 rounded-sm text-[#F07C3D] hover:bg-[#F07C3D] hover:text-white ease-in duration-100 ">Login</button>
+                            <Link to="/login">
+                                <button className="border border-[#F07C3D] px-4 w-32 lg:w-auto py-1 rounded-sm text-[#F07C3D] hover:bg-[#F07C3D] hover:text-white ease-in duration-100 ">Login</button>
+                            </Link>
                         </div>
 
                         <div className="flex justify-center md:block">

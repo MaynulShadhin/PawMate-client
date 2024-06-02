@@ -5,6 +5,8 @@ import Root from "../layouts/Root";
 import Home from "../pages/Home/Home";
 import PetListing from "../pages/Pet listing/PetListing";
 import DonationCamp from "../pages/Donation/DonationCamp";
+import Login from "../pages/Authentication/Login/Login";
+import SignUp from "../pages/Authentication/SignUp/SignUp";
 
   const router = createBrowserRouter([
     {
@@ -22,6 +24,14 @@ import DonationCamp from "../pages/Donation/DonationCamp";
         {
           path: "/donation-camp",
           element:<DonationCamp></DonationCamp>
+        },
+        {
+          path: "/login",
+          element: <Login></Login>
+        },
+        {
+          path:"/signUp",
+          element:<SignUp></SignUp>
         }
       ]
     },
