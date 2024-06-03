@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import bannerImg from '../../../assets/banner.jpg'
 const Banner = () => {
     return (
@@ -7,7 +8,9 @@ const Banner = () => {
                     <h2 className='text-2xl lg:text-4xl text-white font-bold'>Searching for a</h2>
                     <h1 className='text-3xl lg:text-6xl text-[#F07C3D] font-bold'>best Friend</h1>
                     <p className='text-white w-6/12'>Explore our selection of lovable pets awaiting their forever homes. Your new best friend is just a click away.</p>
-                    <button className='text-white bg-[#F07C3D] px-8 py-3 font-semibold rounded-sm hover:bg-[#f3732e] hover:scale-105 ease-in duration-100'>Adopt A pet</button>
+                    <Link to="pet-listing">
+                        <button className='text-white bg-[#F07C3D] px-8 py-3 font-semibold rounded-sm hover:bg-[#f3732e] hover:scale-105 ease-in duration-100'>Adopt A pet</button>
+                    </Link>
                 </div>
             </div>
         </div>

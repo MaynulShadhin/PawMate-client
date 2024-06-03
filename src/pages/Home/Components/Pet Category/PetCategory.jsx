@@ -13,7 +13,7 @@ import cat from '../../../../assets/cat.jpg'
 import dog from '../../../../assets/dog.jpg'
 import rabbit from '../../../../assets/rabbit.jpg'
 import fish from '../../../../assets/fish.jpg'
-import horse from '../../../../assets/horse.jpg'
+import bird from '../../../../assets/bird.jpg'
 import { Link } from 'react-router-dom';
 
 const PetCategory = () => {
@@ -59,8 +59,8 @@ const PetCategory = () => {
                     </SwiperSlide>
                     <SwiperSlide>
                         <Link>
-                            <img src={horse} alt="" />
-                            <h2 className='absolute flex items-center justify-center z-10 text-white top-5 text-xl md:text-3xl font-bold bg-white bg-opacity-15 px-10'>Horse</h2>
+                            <img src={bird} alt="" />
+                            <h2 className='absolute flex items-center justify-center z-10 text-white top-5 text-xl md:text-3xl font-bold bg-white bg-opacity-15 px-10'>Bird</h2>
                         </Link>
                     </SwiperSlide>
 
