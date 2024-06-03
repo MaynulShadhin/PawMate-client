@@ -6,7 +6,7 @@ import { AuthContext } from "../../Provider/FirebaseProvider";
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const { user, logout } = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
 
     const navLinks = <>
         <NavLink to="/" className={({ isActive }) => isActive ? "text-lg mr-4 font-semi-bold border-b-2 border-[#F07C3D] text-[#F07C3D]" : "text-lg mr-4 font-semi-bold text-gray-700 hover:text-[#F07C3D]"}>Home</NavLink>

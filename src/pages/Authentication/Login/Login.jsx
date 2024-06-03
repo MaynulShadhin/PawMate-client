@@ -1,13 +1,16 @@
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaGoogle, FaTwitter } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../Provider/FirebaseProvider";
 import { toast } from "react-toastify";
 
 const Login = () => {
     const [error, setError] = useState('')
-    const { signInUser } = useContext(AuthContext)
+    const { signInUser, googleLogin } = useContext(AuthContext)
+    const navigate = useNavigate()
+    const location = useLocation()
+    const from = location?.state || '/'
     const {
         register,
         handleSubmit,
@@ -20,10 +23,25 @@ const Login = () => {
             const result = await signInUser(email, password)
             console.log(result.user)
             toast.success("Login Successful")
+            navigate(from)
         }
         catch (err) {
             console.log(err)
             setError('Please check your email and password')
+        }
+    }
+
+    //google login
+    const handleGoogleLogin = async () => {
+        try {
+            const res = await googleLogin()
+            console.log(res.user)
+            toast.success("Login Successful")
+            navigate(from)
+        }
+        catch (err) {
+            console.log(err)
+            toast.error(error?.message)
         }
     }
 
@@ -58,8 +76,8 @@ const Login = () => {
                     </div>
                 </div>
                 <div className="flex justify-center space-x-4">
-                    <FaGoogle className="text-2xl mr-4"></FaGoogle>
-                    <FaTwitter className="text-2xl"></FaTwitter>
+                    <FaGoogle onClick={handleGoogleLogin} className="text-2xl mr-4 cursor-pointer"></FaGoogle>
+                    <FaTwitter className="text-2xl cursor-pointer"></FaTwitter>
                 </div>
                 <p className="text-xs text-center sm:px-6 text-gray-600">Do not have an account?
                     <Link className="text-[#F07C3D] font-bold" to="/signUp"> Sign Up</Link>
