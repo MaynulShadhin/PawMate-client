@@ -1,13 +1,14 @@
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../Provider/FirebaseProvider";
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 const SignUp = () => {
     const [error, setError] = useState('')
-    const { createUser, updateUser } = useContext(AuthContext)
+    const { createUser, updateUser,logout } = useContext(AuthContext);
+    const navigate = useNavigate()
     const {
         register,
         handleSubmit,
@@ -37,6 +38,8 @@ const SignUp = () => {
                 updateUser(fullName, image)
                     .then(() => {
                         toast.success('Sign Up Successful!')
+                        logout()
+                        navigate('/login')
                     })
             })
             .catch(() => {
