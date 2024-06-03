@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import PropTypes from 'prop-types';
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
 import auth from "../Firebase/Firebase.config";
 
 export const AuthContext = createContext(null)
@@ -11,37 +11,45 @@ const FirebaseProvider = ({ children }) => {
     //create user
     const createUser = (email, password) => {
         setLoading(true)
-        return createUserWithEmailAndPassword(auth,email,password)
+        return createUserWithEmailAndPassword(auth, email, password)
     }
     //update user
-    const updateUser = (fullName,image)=>{
-        return updateProfile(auth.currentUser,{
+    const updateUser = (fullName, image) => {
+        return updateProfile(auth.currentUser, {
             displayName: fullName,
             photoURL: image
         })
     }
     //login in user
-    const signInUser= (email,password)=>{
+    const signInUser = (email, password) => {
         setLoading(true)
-        return signInWithEmailAndPassword(auth,email,password)
+        return signInWithEmailAndPassword(auth, email, password)
     }
+    //logout
+    const logout = () => {
+        setLoading(true)
+        return signOut(auth)
+    }
+
     //observer
-    useEffect(()=>{
-        const unsubscribe = onAuthStateChanged(auth,(currentUser)=>{
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             console.log('user on observation', currentUser);
+            setUser(currentUser)
             setLoading(false)
         })
-        return () =>{
+        return () => {
             unsubscribe();
         }
-    },[])
+    }, [])
 
     const allValues = {
         user,
         loading,
         createUser,
         updateUser,
-        signInUser
+        signInUser,
+        logout
     }
 
     return (
