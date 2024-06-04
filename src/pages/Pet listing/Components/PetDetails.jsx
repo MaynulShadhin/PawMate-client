@@ -12,11 +12,12 @@ const PetDetails = () => {
                     <p className="text-xl text-gray-600 mb-4"><span className="font-bold">Category:</span> {pet.pet_category}</p>
                     <p className="text-xl text-gray-600 mb-4"><span className="font-bold">Location:</span> {pet.pet_location}</p>
                     <p className="text-lg text-gray-800 mb-6">{pet.short_description}</p>
-                    <p className="text-lg text-gray-800">{pet.long_description}</p>
-                    <button className='text-white bg-[#F07C3D] px-8 py-3 font-semibold rounded-sm hover:bg-[#f3732e] hover:scale-105 ease-in duration-100 mt-4'>Adopt</button>
+                    <p className="text-lg text-gray-800 mb-6">{pet.long_description}</p>
+                    <button className='block w-full md:w-auto text-white bg-[#F07C3D] px-8 py-3 font-semibold rounded-sm hover:bg-[#f3732e] hover:scale-105 ease-in duration-100 mt-4 md:mt-0'>Adopt</button>
                 </div>
             </div>
         </div>
+
     );
 };
 

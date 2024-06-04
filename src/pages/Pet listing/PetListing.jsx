@@ -1,13 +1,16 @@
-import { useEffect, useState } from "react";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 import PetCard from "./Components/PetCard";
+import { useQuery } from "@tanstack/react-query";
 
 const PetListing = () => {
-    const [pets, setPets] = useState([])
-    useEffect(()=>{
-        fetch(`${import.meta.env.VITE_API_URL}/pets`)
-        .then(res=>res.json())
-        .then(data=>setPets(data))
-    },[])
+    const axiosPublic = useAxiosPublic()
+    const {data: pets=[]} = useQuery({
+        queryKey: ['pets'],
+        queryFn: async ()=>{
+            const res = await axiosPublic.get('/pets')
+            return res.data;
+        }
+    })
     return (
         <div className="container mx-auto">
             <h2 className="text-3xl font-bold mb-12">Adopt a Pet</h2>

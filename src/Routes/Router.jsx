@@ -1,6 +1,6 @@
 import {
-    createBrowserRouter,
-  } from "react-router-dom";
+  createBrowserRouter,
+} from "react-router-dom";
 import Root from "../layouts/Root";
 import Home from "../pages/Home/Home";
 import PetListing from "../pages/Pet listing/PetListing";
@@ -9,43 +9,49 @@ import Login from "../pages/Authentication/Login/Login";
 import SignUp from "../pages/Authentication/SignUp/SignUp";
 import PetsByCategory from "../pages/Home/Components/Pet Category/PetsByCategory";
 import PetDetails from "../pages/Pet listing/Components/PetDetails";
+import DonationDetails from "../pages/Donation/Component/DonationDetails";
 
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <Root></Root>,
-      children:[
-        {
-            path:"/",
-            element: <Home></Home>
-        },
-        {
-          path: "/pets/:category",
-          element: <PetsByCategory></PetsByCategory>
-        },
-        {
-          path:"/pet-listing",
-          element: <PetListing></PetListing>
-        },
-        {
-          path: "/petDetails/:id",
-          element: <PetDetails></PetDetails>,
-          loader: ({params})=> fetch(`${import.meta.env.VITE_API_URL}/pets/${params.id}`)
-        },
-        {
-          path: "/donation-camp",
-          element:<DonationCamp></DonationCamp>
-        },
-        {
-          path: "/login",
-          element: <Login></Login>
-        },
-        {
-          path:"/signUp",
-          element:<SignUp></SignUp>
-        }
-      ]
-    },
-  ]);
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Root></Root>,
+    children: [
+      {
+        path: "/",
+        element: <Home></Home>
+      },
+      {
+        path: "/pets/:category",
+        element: <PetsByCategory></PetsByCategory>
+      },
+      {
+        path: "/pet-listing",
+        element: <PetListing></PetListing>
+      },
+      {
+        path: "/petDetails/:id",
+        element: <PetDetails></PetDetails>,
+        loader: ({ params }) => fetch(`${import.meta.env.VITE_API_URL}/pet/${params.id}`)
+      },
+      {
+        path: "/donation-camp",
+        element: <DonationCamp></DonationCamp>
+      },
+      {
+        path: "/donationDetails/:id",
+        element: <DonationDetails></DonationDetails>,
+        loader: ({ params }) => fetch(`${import.meta.env.VITE_API_URL}/donation-camp/${params.id}`)
+      },
+      {
+        path: "/login",
+        element: <Login></Login>
+      },
+      {
+        path: "/signUp",
+        element: <SignUp></SignUp>
+      }
+    ]
+  },
+]);
 
-  export default router;
+export default router;

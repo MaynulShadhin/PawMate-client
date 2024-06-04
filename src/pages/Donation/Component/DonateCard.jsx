@@ -8,7 +8,8 @@ const DonateCard = ({donation}) => {
                 <h2 className="text-2xl font-bold mb-2">{donation.pet_name}</h2>
                 <p className="text-gray-600 mb-2"><span className="font-bold">Max Donation Amount:</span> ${donation.max_donation_amount}</p>
                 <p className="text-gray-600 mb-2"><span className="font-bold">Donated Amount:</span> ${donation.donated_amount}</p>
-                <Link to={`/donation-campaigns/${donation.id}`} className="inline-block bg-[#F07C3D] text-white py-2 px-4 rounded hover:bg-[#ee6c26]">
+                <p className="text-gray-600 mb-2"><span className="font-bold">Post Created:</span> {donation.created_at}</p>
+                <Link to={`/donationDetails/${donation._id}`} className="inline-block bg-[#F07C3D] text-white py-2 px-4 rounded hover:bg-[#ee6c26]">
                     View Details
                 </Link>
             </div>
