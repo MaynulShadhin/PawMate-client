@@ -10,6 +10,8 @@ import SignUp from "../pages/Authentication/SignUp/SignUp";
 import PetsByCategory from "../pages/Home/Components/Pet Category/PetsByCategory";
 import PetDetails from "../pages/Pet listing/Components/PetDetails";
 import DonationDetails from "../pages/Donation/Component/DonationDetails";
+import Dashboard from "../layouts/Dashboard";
+import AddPet from "../pages/Dashboard/AddPet/AddPet";
 
 const router = createBrowserRouter([
   {
@@ -52,6 +54,16 @@ const router = createBrowserRouter([
       }
     ]
   },
+  {
+    path:'dashboard',
+    element: <Dashboard></Dashboard>,
+    children: [
+      {
+        path: 'addPet',
+        element: <AddPet></AddPet>
+      },
+    ]
+  }
 ]);
 
 export default router;
