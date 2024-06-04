@@ -14,9 +14,27 @@ import dog from '../../../../assets/dog.jpg'
 import rabbit from '../../../../assets/rabbit.jpg'
 import fish from '../../../../assets/fish.jpg'
 import bird from '../../../../assets/bird.jpg'
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const PetCategory = () => {
+    const [pets,setPets] = useState([])
+    const{category} = useParams();
+
+    useEffect(()=>{
+        const petsByCategory = async()=>{
+            try{
+                const res = await axios.get(`${import.meta.env.VITE_API_URL}/pets/${category}`)
+                console.log(res.data)
+            }
+            catch(err){
+                console.log(err)
+            }
+        }
+        petsByCategory();
+    },[category])
+
     return (
         <div className="my-28 mx-auto container">
             <h2 className="text-4xl text-center font-semibold mb-12">Pet Categories</h2>

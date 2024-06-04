@@ -4,7 +4,7 @@ import PetCard from "./Components/PetCard";
 const PetListing = () => {
     const [pets, setPets] = useState([])
     useEffect(()=>{
-        fetch('http://localhost:5000/pets')
+        fetch(`${import.meta.env.VITE_API_URL}/pets`)
         .then(res=>res.json())
         .then(data=>setPets(data))
     },[])

@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
-const PetCard = ({pet}) => {
-    const {pet_image,pet_name,pet_age,pet_location,short_description} = pet
+import { Link } from 'react-router-dom';
+const PetCard = ({ pet }) => {
+    const { _id,pet_image, pet_name, pet_age, pet_location, short_description } = pet
     return (
         <div>
             <div className="max-w-sm rounded overflow-hidden shadow-lg bg-white m-4">
@@ -16,9 +17,11 @@ const PetCard = ({pet}) => {
                     <span className="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-[#F07C3D] mr-2 mb-2"><span>Location: </span> {pet_location}</span>
                 </div>
                 <div className="px-6 py-4">
-                    <button className="bg-[#F07C3D] hover:bg-[#ee6c26] text-white font-bold py-2 px-4 rounded">
-                        View Details
-                    </button>
+                    <Link to={`/petDetails/${_id}`}>
+                        <button className="bg-[#F07C3D] hover:bg-[#ee6c26] text-white font-bold py-2 px-4 rounded">
+                            View Details
+                        </button>
+                    </Link>
                 </div>
             </div>
         </div>
