@@ -12,6 +12,7 @@ import PetDetails from "../pages/Pet listing/Components/PetDetails";
 import DonationDetails from "../pages/Donation/Component/DonationDetails";
 import Dashboard from "../layouts/Dashboard";
 import AddPet from "../pages/Dashboard/AddPet/AddPet";
+import PrivateRoute from "./Private Routes/PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -32,7 +33,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/petDetails/:id",
-        element: <PetDetails></PetDetails>,
+        element: <PrivateRoute><PetDetails></PetDetails></PrivateRoute>,
         loader: ({ params }) => fetch(`${import.meta.env.VITE_API_URL}/pet/${params.id}`)
       },
       {
@@ -41,7 +42,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/donationDetails/:id",
-        element: <DonationDetails></DonationDetails>,
+        element: <PrivateRoute><DonationDetails></DonationDetails></PrivateRoute>,
         loader: ({ params }) => fetch(`${import.meta.env.VITE_API_URL}/donation-camp/${params.id}`)
       },
       {
@@ -55,12 +56,12 @@ const router = createBrowserRouter([
     ]
   },
   {
-    path:'dashboard',
+    path: 'dashboard',
     element: <Dashboard></Dashboard>,
     children: [
       {
         path: 'addPet',
-        element: <AddPet></AddPet>
+        element: <PrivateRoute><AddPet></AddPet></PrivateRoute>
       },
     ]
   }

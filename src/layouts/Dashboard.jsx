@@ -7,6 +7,7 @@ const Dashboard = () => {
     const [isOpen, setIsOpen] = useState(true);
 
     const handleClose = () => setIsOpen(false);
+
     return (
         <div>
             <div>
@@ -24,42 +25,28 @@ const Dashboard = () => {
                                 <div>
                                     <Sidebar.Items>
                                         <Sidebar.ItemGroup>
-                                            <NavLink to="/dashboard/addPet">
-                                                <Sidebar.Item>
-                                                    Add A pet
-                                                </Sidebar.Item>
+                                            <NavLink to="/dashboard/addPet" className={({ isActive }) => isActive ? "text-lg mr-4 font-semi-bold border-b-2 border-[#F07C3D] text-[#F07C3D] block" : "text-lg mr-4 font-semi-bold text-gray-700 hover:text-[#F07C3D] block"}>
+                                                Add A pet
                                             </NavLink>
-                                            <NavLink>
-                                                <Sidebar.Item>
-                                                    My Added pets
-                                                </Sidebar.Item>
+                                            <NavLink to="/dashboard/myPets" className={({ isActive }) => isActive ? "text-lg mr-4 font-semi-bold border-b-2 border-[#F07C3D] text-[#F07C3D] block" : "text-lg mr-4 font-semi-bold text-gray-700 hover:text-[#F07C3D] block"}>
+                                                My Added pets
                                             </NavLink>
-                                            <NavLink>
-                                                <Sidebar.Item>
-                                                    Adoption Request
-                                                </Sidebar.Item>
+                                            <NavLink to="/dashboard/adoptionRequests" className={({ isActive }) => isActive ? "text-lg mr-4 font-semi-bold border-b-2 border-[#F07C3D] text-[#F07C3D] block" : "text-lg mr-4 font-semi-bold text-gray-700 hover:text-[#F07C3D] block"}>
+                                                Adoption Request
                                             </NavLink>
-                                            <NavLink>
-                                                <Sidebar.Item>
-                                                    Create Donation Campaign
-                                                </Sidebar.Item>
+                                            <NavLink to="/dashboard/createCampaign" className={({ isActive }) => isActive ? "text-lg mr-4 font-semi-bold border-b-2 border-[#F07C3D] text-[#F07C3D] block" : "text-lg mr-4 font-semi-bold text-gray-700 hover:text-[#F07C3D] block"}>
+                                                Create Donation Campaign
                                             </NavLink>
-                                            <NavLink>
-                                                <Sidebar.Item>
-                                                    My Donation Campaigns
-                                                </Sidebar.Item>
+                                            <NavLink to="/dashboard/myCampaigns" className={({ isActive }) => isActive ? "text-lg mr-4 font-semi-bold border-b-2 border-[#F07C3D] text-[#F07C3D] block" : "text-lg mr-4 font-semi-bold text-gray-700 hover:text-[#F07C3D] block"}>
+                                                My Donation Campaigns
                                             </NavLink>
-                                            <NavLink>
-                                                <Sidebar.Item>
-                                                    My Donations
-                                                </Sidebar.Item>
+                                            <NavLink to="/dashboard/myDonations" className={({ isActive }) => isActive ? "text-lg mr-4 font-semi-bold border-b-2 border-[#F07C3D] text-[#F07C3D] block" : "text-lg mr-4 font-semi-bold text-gray-700 hover:text-[#F07C3D] block"}>
+                                                My Donations
                                             </NavLink>
                                         </Sidebar.ItemGroup>
                                         <Sidebar.ItemGroup>
-                                            <NavLink to="/">
-                                                <Sidebar.Item>
-                                                    Home
-                                                </Sidebar.Item>
+                                            <NavLink to="/" className={({ isActive }) => isActive ? "text-lg mr-4 font-semi-bold border-b-2 border-[#F07C3D] text-[#F07C3D]" : "text-lg mr-4 font-semi-bold text-gray-700 hover:text-[#F07C3D]"}>
+                                                Home
                                             </NavLink>
                                         </Sidebar.ItemGroup>
                                     </Sidebar.Items>
