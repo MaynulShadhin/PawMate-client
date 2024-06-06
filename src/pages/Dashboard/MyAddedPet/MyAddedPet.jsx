@@ -1,5 +1,5 @@
-import { useReactTable, flexRender, getCoreRowModel } from '@tanstack/react-table'
-import { useContext, useMemo} from 'react';
+import { useReactTable, flexRender, getCoreRowModel, getPaginationRowModel } from '@tanstack/react-table'
+import { useContext, useMemo } from 'react';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { AuthContext } from '../../../Provider/FirebaseProvider';
 import { useQuery } from '@tanstack/react-query';
@@ -43,7 +43,6 @@ const MyAddedPet = () => {
                     refetch()
                 }
                 catch (err) {
-                    console.log(err)
                     toast.error(err.message)
                 }
 
@@ -106,14 +105,17 @@ const MyAddedPet = () => {
     ]
 
     const table = useReactTable({
-        data, columns, getCoreRowModel: getCoreRowModel()
+        data,
+        columns,
+        getCoreRowModel: getCoreRowModel(),
+        getPaginationRowModel: getPaginationRowModel()
     });
 
     return (
         <div>
             <h2 className='text-4xl font-semibold text-center mb-12'>My Added Pet</h2>
             <table className="min-w-full divide-y divide-gray-200">
-                <thead className='bg-[#F07C3D] text-white'>
+                <thead className='bg-[[#F07C3D]] text-white'>
                     {table.getHeaderGroups().map(headerGroup => (
                         <tr key={headerGroup.id}>
                             {headerGroup.headers.map(header => (
@@ -143,45 +145,12 @@ const MyAddedPet = () => {
                     ))}
                 </tbody>
             </table>
-
-
-
-            {/* <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-[#F07C3D]">
-                    <tr>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Pet Image</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Name</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Age</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Category</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Adopted</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Actions</th>
-                    </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                    {pets.map((pet, index) => (
-                        <tr key={index}>
-                            <td className="px-6 py-4 whitespace-nowrap"><img src={pet.pet_image} alt={pet.pet_name} className="h-10 w-10 rounded-full" /></td>
-                            <td className="px-6 py-4 whitespace-nowrap">{pet.pet_name}</td>
-                            <td className="px-6 py-4 whitespace-nowrap">{pet.pet_age} Years</td>
-                            <td className="px-6 py-4 whitespace-nowrap">{pet.pet_category}</td>
-                            <td className="px-6 py-4 whitespace-nowrap">{pet.adopted ? 'Adopted' : 'Not Adopted'}</td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                                <div className='flex items-center gap-4'>
-                                    <button >
-                                        <MdEditSquare className='text-2xl'></MdEditSquare>
-                                    </button>
-                                    <button onClick={() => handleDelete(pet._id)} className="text-red-600 hover:text-red-900">
-                                        <MdDelete className='text-2xl'></MdDelete>
-                                    </button>
-                                    <button className='bg-[#F07C3D] text-white px-2 py-1 font-medium rounded-md'>
-                                        Adopted
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table> */}
+            <div className='flex gap-4 mt-8 items-center justify-center'>
+                <button onClick={()=>table.setPageIndex(0)} className="bg-[#F07C3D] hover:bg-white hover:border-2 border-slate-800 hover:text-black transition duration-75 text-white px-2 py-1">First page</button>
+                <button disabled={!table.getCanPreviousPage()} onClick={()=>table.previousPage()} className="bg-[#F07C3D] hover:bg-white hover:border-2 border-slate-800 hover:text-black transition duration-75 text-white px-2 py-1">Prev page</button>
+                <button disabled={!table.getCanNextPage()} onClick={()=>table.nextPage()} className="bg-[#F07C3D] hover:bg-white hover:border-2 border-slate-800 hover:text-black transition duration-75 text-white px-2 py-1">Next page</button>
+                <button onClick={()=>table.setPageIndex(table.getPageCount()-1)} className="bg-[#F07C3D] hover:bg-white hover:border-2 border-slate-800 hover:text-black transition duration-75 text-white px-2 py-1">Last page</button>
+            </div>
         </div>
     );
 };
