@@ -5,6 +5,7 @@ import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import { Controller, useForm } from "react-hook-form";
 import Select from 'react-select'
 import { useLoaderData } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const petCategories = [
     { value: 'Dog', label: 'Dog' },
@@ -17,15 +18,45 @@ const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`
 
 const UpdatePet = () => {
-    const {pet_name,pet_age,pet_category,pet_location,short_description,long_description} = useLoaderData()
+    const { _id, pet_name, pet_age, pet_category, pet_location, short_description, long_description } = useLoaderData()
     const { user } = useContext(AuthContext)
     const axiosSecure = useAxiosSecure()
     const axiosPublic = useAxiosPublic()
     const { register, handleSubmit, control, formState: { errors } } = useForm();
 
     const onSubmit = async (data) => {
-        console.log(data)
-    }
+        //get the image url using api
+        const imageFile = { image: data.image[0] }
+        const res = await axiosPublic.post(image_hosting_api, imageFile, {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        });
+        if (res.data.success) {
+            //send the data to server
+            const petData = {
+                email: user.email,
+                pet_image: res.data.data.display_url,
+                pet_name: data.name,
+                pet_age: parseInt(data.age),
+                pet_category: data.category,
+                pet_location: data.location,
+                short_description: data.shortDescription,
+                long_description: data.longDescription,
+            }
+            const petRes = await axiosSecure.patch(`/pet/${_id}`, petData);
+            if(petRes.data.modifiedCount > 0){
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: `${data.name} is updated to the menu.`,
+                    showConfirmButton: false,
+                    timer: 1500
+                  });
+            }
+        }
+        console.log(res.data)
+    };
 
     return (
         <div className="flex items-center justify-center w-full h-screen">
@@ -42,17 +73,17 @@ const UpdatePet = () => {
 
                     <div className="mb-4">
                         <label className="block text-gray-700 font-bold mb-2">Pet Name</label>
-                        <input {...register('name', { required: 'Pet name is required' })} 
-                        defaultValue={pet_name}
-                        className="w-full px-3 py-2 border rounded" />
+                        <input {...register('name', { required: 'Pet name is required' })}
+                            defaultValue={pet_name}
+                            className="w-full px-3 py-2 border rounded" />
                         {errors.name && <p className="text-red-500 text-xs italic">{errors.name.message}</p>}
                     </div>
 
                     <div className="mb-4">
                         <label className="block text-gray-700 font-bold mb-2">Pet Age</label>
-                        <input type="number" {...register('age', { required: 'Pet age is required' })} 
-                        defaultValue={pet_age}
-                        className="w-full px-3 py-2 border rounded" />
+                        <input type="number" {...register('age', { required: 'Pet age is required' })}
+                            defaultValue={pet_age}
+                            className="w-full px-3 py-2 border rounded" />
                         {errors.age && <p className="text-red-500 text-xs italic">{errors.age.message}</p>}
                     </div>
 
@@ -79,24 +110,24 @@ const UpdatePet = () => {
                     <div className="mb-4">
                         <label className="block text-gray-700 font-bold mb-2">Pet Location</label>
                         <input {...register('location', { required: 'Pet location is required' })}
-                        defaultValue={pet_location}
-                        className="w-full px-3 py-2 border rounded" />
+                            defaultValue={pet_location}
+                            className="w-full px-3 py-2 border rounded" />
                         {errors.location && <p className="text-red-500 text-xs italic">{errors.location.message}</p>}
                     </div>
 
                     <div className="mb-4">
                         <label className="block text-gray-700 font-bold mb-2">Short Description</label>
-                        <input {...register('shortDescription', { required: 'Short description is required' })} 
-                        defaultValue={short_description}
-                        className="w-full px-3 py-2 border rounded" />
+                        <input {...register('shortDescription', { required: 'Short description is required' })}
+                            defaultValue={short_description}
+                            className="w-full px-3 py-2 border rounded" />
                         {errors.shortDescription && <p className="text-red-500 text-xs italic">{errors.shortDescription.message}</p>}
                     </div>
 
                     <div className="mb-4">
                         <label className="block text-gray-700 font-bold mb-2">Long Description</label>
-                        <textarea {...register('longDescription', { required: 'Long description is required' })} 
-                        defaultValue={long_description}
-                        className="w-full px-3 py-2 border rounded" />
+                        <textarea {...register('longDescription', { required: 'Long description is required' })}
+                            defaultValue={long_description}
+                            className="w-full px-3 py-2 border rounded" />
                         {errors.longDescription && <p className="text-red-500 text-xs italic">{errors.longDescription.message}</p>}
                     </div>
 
