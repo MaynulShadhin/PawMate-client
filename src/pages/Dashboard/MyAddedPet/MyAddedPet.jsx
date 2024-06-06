@@ -7,6 +7,7 @@ import { MdDelete, MdEditSquare } from 'react-icons/md';
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
 import { FaAngleDown, FaAngleUp } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const MyAddedPet = () => {
     const [sorting, setSorting] = useState([])
@@ -92,9 +93,11 @@ const MyAddedPet = () => {
             header: 'Actions',
             cell: ({ row }) => (
                 <div className='flex items-center gap-4'>
-                    <button>
-                        <MdEditSquare className='text-2xl'></MdEditSquare>
-                    </button>
+                    <Link to={`/dashboard/updatePet/${row.original._id}`}>
+                        <button>
+                            <MdEditSquare className='text-2xl'></MdEditSquare>
+                        </button>
+                    </Link>
                     <button onClick={() => handleDelete(row.original._id)} className="text-red-600 hover:text-red-900">
                         <MdDelete className='text-2xl'></MdDelete>
                     </button>

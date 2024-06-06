@@ -14,6 +14,7 @@ import Dashboard from "../layouts/Dashboard";
 import AddPet from "../pages/Dashboard/AddPet/AddPet";
 import PrivateRoute from "./Private Routes/PrivateRoute";
 import MyAddedPet from "../pages/Dashboard/MyAddedPet/MyAddedPet";
+import UpdatePet from "../pages/Dashboard/UpdatePet/UpdatePet";
 
 const router = createBrowserRouter([
   {
@@ -67,6 +68,11 @@ const router = createBrowserRouter([
       {
         path: 'myPets',
         element: <MyAddedPet></MyAddedPet>
+      },
+      {
+        path: 'updatePet/:id',
+        element: <UpdatePet></UpdatePet>,
+        loader: ({params})=>fetch(`${import.meta.env.VITE_API_URL}/pet/${params.id}`)
       }
     ]
   }
