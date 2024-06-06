@@ -1,13 +1,15 @@
-import { useReactTable, flexRender, getCoreRowModel, getPaginationRowModel } from '@tanstack/react-table'
-import { useContext, useMemo } from 'react';
+import { useReactTable, flexRender, getCoreRowModel, getPaginationRowModel, getSortedRowModel } from '@tanstack/react-table'
+import { useContext, useMemo, useState } from 'react';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { AuthContext } from '../../../Provider/FirebaseProvider';
 import { useQuery } from '@tanstack/react-query';
 import { MdDelete, MdEditSquare } from 'react-icons/md';
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
+import { FaAngleDown, FaAngleUp } from 'react-icons/fa';
 
 const MyAddedPet = () => {
+    const [sorting, setSorting] = useState([])
     const axiosSecure = useAxiosSecure()
     const { user } = useContext(AuthContext);
     const { refetch, data: pets = [] } = useQuery({
@@ -108,24 +110,38 @@ const MyAddedPet = () => {
         data,
         columns,
         getCoreRowModel: getCoreRowModel(),
-        getPaginationRowModel: getPaginationRowModel()
+        getPaginationRowModel: getPaginationRowModel(),
+        getSortedRowModel: getSortedRowModel(),
+        state: {
+            sorting: sorting
+        },
+        onSortingChange: setSorting,
     });
 
     return (
         <div>
             <h2 className='text-4xl font-semibold text-center mb-12'>My Added Pet</h2>
             <table className="min-w-full divide-y divide-gray-200">
-                <thead className='bg-[[#F07C3D]] text-white'>
+                <thead className='bg-[#F07C3D] text-white'>
                     {table.getHeaderGroups().map(headerGroup => (
                         <tr key={headerGroup.id}>
                             {headerGroup.headers.map(header => (
                                 <th
                                     key={header.id}
+                                    onClick={header.column.getToggleSortingHandler()}
                                     className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
-                                    {flexRender(
-                                        header.column.columnDef.header,
-                                        header.getContext()
-                                    )}
+                                    {header.isPlaceholder
+                                        ? null : (
+                                            <div className='flex items-center'>
+                                                {flexRender(
+                                                    header.column.columnDef.header,
+                                                    header.getContext()
+                                                )}
+                                                {
+                                                    { asc: <FaAngleUp className='text-2xl'></FaAngleUp>, desc: <FaAngleDown className='text-2xl'></FaAngleDown> }[header.column.getIsSorted() ?? null]
+                                                }
+                                            </div>
+                                        )}
                                 </th>
                             ))}
                         </tr>
@@ -146,10 +162,10 @@ const MyAddedPet = () => {
                 </tbody>
             </table>
             <div className='flex gap-4 mt-8 items-center justify-center'>
-                <button onClick={()=>table.setPageIndex(0)} className="bg-[#F07C3D] hover:bg-white hover:border-2 border-slate-800 hover:text-black transition duration-75 text-white px-2 py-1">First page</button>
-                <button disabled={!table.getCanPreviousPage()} onClick={()=>table.previousPage()} className="bg-[#F07C3D] hover:bg-white hover:border-2 border-slate-800 hover:text-black transition duration-75 text-white px-2 py-1">Prev page</button>
-                <button disabled={!table.getCanNextPage()} onClick={()=>table.nextPage()} className="bg-[#F07C3D] hover:bg-white hover:border-2 border-slate-800 hover:text-black transition duration-75 text-white px-2 py-1">Next page</button>
-                <button onClick={()=>table.setPageIndex(table.getPageCount()-1)} className="bg-[#F07C3D] hover:bg-white hover:border-2 border-slate-800 hover:text-black transition duration-75 text-white px-2 py-1">Last page</button>
+                <button onClick={() => table.setPageIndex(0)} className="bg-[#F07C3D] hover:bg-white hover:border-2 border-slate-800 hover:text-black transition duration-75 text-white px-2 py-1">First page</button>
+                <button disabled={!table.getCanPreviousPage()} onClick={() => table.previousPage()} className="bg-[#F07C3D] hover:bg-white hover:border-2 border-slate-800 hover:text-black transition duration-75 text-white px-2 py-1">Prev page</button>
+                <button disabled={!table.getCanNextPage()} onClick={() => table.nextPage()} className="bg-[#F07C3D] hover:bg-white hover:border-2 border-slate-800 hover:text-black transition duration-75 text-white px-2 py-1">Next page</button>
+                <button onClick={() => table.setPageIndex(table.getPageCount() - 1)} className="bg-[#F07C3D] hover:bg-white hover:border-2 border-slate-800 hover:text-black transition duration-75 text-white px-2 py-1">Last page</button>
             </div>
         </div>
     );
