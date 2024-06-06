@@ -16,7 +16,7 @@ const MyAddedPet = () => {
     const { refetch, data: pets = [] } = useQuery({
         queryKey: ['pets', user?.email],
         queryFn: async () => {
-            const res = await axiosSecure.get(`/pets?email=${user.email}`);
+            const res = await axiosSecure.get(`/pets/${user.email}`);
             return res.data
         }
     })
@@ -52,6 +52,21 @@ const MyAddedPet = () => {
             }
         })
     };
+
+    //adopted or not 
+    const handleAdopted = async (petId) => {
+        try {
+            const { data } = await axiosSecure.put(`${import.meta.env.VITE_API_URL}/pet/adopted/${petId}`);
+            console.log(data)
+            if (data.modifiedCount > 0) {
+                toast.success("Pet marked as adopted");
+                refetch()
+            }
+        }
+        catch (err) {
+            console.log(err);
+        }
+    }
 
     const data = useMemo(() => pets, [pets])
 
@@ -101,9 +116,16 @@ const MyAddedPet = () => {
                     <button onClick={() => handleDelete(row.original._id)} className="text-red-600 hover:text-red-900">
                         <MdDelete className='text-2xl'></MdDelete>
                     </button>
-                    <button className='bg-[#F07C3D] text-white px-2 py-1 font-medium rounded-md'>
-                        Adopted
-                    </button>
+                    {
+                        !row.original.adopted ? <button
+                            onClick={() => handleAdopted(row.original._id)}
+                            className='bg-[#F07C3D] text-white px-2 py-1 font-medium rounded-md'>
+                            Adopted
+                        </button> : <button disabled
+                            className='bg-gray-300 text-white px-2 py-1 font-medium rounded-md'>
+                            Adopted
+                        </button>
+                    }
                 </div>
             )
         }
