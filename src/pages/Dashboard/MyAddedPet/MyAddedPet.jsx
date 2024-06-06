@@ -1,8 +1,10 @@
-import { useReactTable, getCoreRowModel, flexRender } from '@tanstack/react-table'
-import { useContext, useState } from 'react';
+import { useReactTable, flexRender, getCoreRowModel } from '@tanstack/react-table'
+import { useContext, useMemo, useState } from 'react';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { AuthContext } from '../../../Provider/FirebaseProvider';
 import { useQuery } from '@tanstack/react-query';
+import { MdDelete, MdEditSquare } from 'react-icons/md';
+import { FaDeleteLeft } from 'react-icons/fa6';
 
 const MyAddedPet = () => {
     const axiosSecure = useAxiosSecure()
@@ -17,34 +19,113 @@ const MyAddedPet = () => {
 
     //delete option
     const handleDelete = (petId) => {
-        // Call deletePet mutation
         console.log(petId)
     };
 
-    const { table } = useReactTable({
-        data: pets,
-        columns: [
-            { Header: 'Pet Image', accessor: 'pet_image', Cell: flexRender('pet_image') },
-            { Header: 'Pet Name', accessor: 'pet_name' },
-            { Header: 'Pet Age', accessor: 'pet_age' },
-            { Header: 'Pet Category', accessor: 'pet_category' },
-            { Header: 'Adopted', accessor: 'adopted' },
-            { Header: 'Date Added', accessor: 'dateAdded' },
-            { Header: 'Actions', accessor: 'actions', Cell: flexRender('actions', { onDelete: handleDelete }) }
-        ]
+    const data = useMemo(() => pets, [pets])
+
+    /**@type import('@tanstack/react-table').columnDef<any>*/
+    const columns = [
+        {
+            header: "#",
+            cell: (cell)=> cell.row.index+1
+        },
+        {
+            accessorKey: 'pet_image',
+            header: 'Pet Image',
+            cell: (cell)=> {
+                return <img className='h-12 w-12 rounded-full' src={cell.getValue()}/>
+            }
+        },
+        {
+            id: "pet_name",
+            header: 'Pet Name',
+            accessorKey: 'pet_name',
+        },
+        {
+            id: "pet_age",
+            header: 'Pet Age',
+            accessorKey: 'pet_age'
+        },
+        {
+            id: "pet_category",
+            header: 'Pet Category',
+            accessorKey: 'pet_category'
+        },
+        {
+            accessorKey: 'adopted',
+            header: 'Adopted',
+            cell: info => (info.getValue() ? 'Adopted' : 'Not Adopted')
+        },
+        {
+            id: 'actions',
+            header: 'Actions',
+            cell: ({ row }) => (
+                <div className='flex items-center gap-4'>
+                    <button>
+                        <MdEditSquare className='text-2xl'></MdEditSquare>
+                    </button>
+                    <button onClick={() => handleDelete(row.original._id)} className="text-red-600 hover:text-red-900">
+                        <MdDelete className='text-2xl'></MdDelete>
+                    </button>
+                    <button className='bg-[#F07C3D] text-white px-2 py-1 font-medium rounded-md'>
+                        Adopted
+                    </button>
+                </div>
+            )
+        }
+    ]
+
+    const table = useReactTable({
+        data, columns, getCoreRowModel:getCoreRowModel()
     });
 
     return (
         <div>
+            <h2 className='text-4xl font-semibold text-center mb-12'>My Added Pet</h2>
             <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
+                <thead className='bg-[#F07C3D] text-white'>
+                    {table.getHeaderGroups().map(headerGroup => (
+                        <tr key={headerGroup.id}>
+                            {headerGroup.headers.map(header => (
+                                <th
+                                    key={header.id}
+                                    className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                                    {flexRender(
+                                        header.column.columnDef.header,
+                                        header.getContext()
+                                    )}
+                                </th>
+                            ))}
+                        </tr>
+                    ))}
+                </thead>
+                <tbody>
+                    {table.getRowModel().rows.map(row => (
+                        <tr key={row.id}>
+                            {row.getVisibleCells().map(cell => (
+                                <td key={cell.id}>
+                                    {
+                                        flexRender(cell.column.columnDef.cell, cell.getContext())
+                                    }
+                                </td>
+                            ))}
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+
+
+
+            {/* <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-[#F07C3D]">
                     <tr>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pet Image</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Age</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Adopted</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Pet Image</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Name</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Age</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Category</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Adopted</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Actions</th>
                     </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
@@ -55,11 +136,23 @@ const MyAddedPet = () => {
                             <td className="px-6 py-4 whitespace-nowrap">{pet.pet_age} Years</td>
                             <td className="px-6 py-4 whitespace-nowrap">{pet.pet_category}</td>
                             <td className="px-6 py-4 whitespace-nowrap">{pet.adopted ? 'Adopted' : 'Not Adopted'}</td>
-                            <td className="px-6 py-4 whitespace-nowrap"><button onClick={() => handleDelete(pet._id)} className="text-red-600 hover:text-red-900">Delete</button></td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                                <div className='flex items-center gap-4'>
+                                    <button >
+                                        <MdEditSquare className='text-2xl'></MdEditSquare>
+                                    </button>
+                                    <button onClick={() => handleDelete(pet._id)} className="text-red-600 hover:text-red-900">
+                                        <MdDelete className='text-2xl'></MdDelete>
+                                    </button>
+                                    <button className='bg-[#F07C3D] text-white px-2 py-1 font-medium rounded-md'>
+                                        Adopted
+                                    </button>
+                                </div>
+                            </td>
                         </tr>
                     ))}
                 </tbody>
-            </table>
+            </table> */}
         </div>
     );
 };
