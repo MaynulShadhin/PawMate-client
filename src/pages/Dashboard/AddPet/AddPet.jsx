@@ -5,6 +5,7 @@ import useAxiosPublic from '../../../hooks/useAxiosPublic';
 import Swal from 'sweetalert2';
 import { useContext } from 'react';
 import { AuthContext } from '../../../Provider/FirebaseProvider';
+import { useNavigate } from 'react-router-dom';
 const petCategories = [
     { value: 'Dog', label: 'Dog' },
     { value: 'Cat', label: 'Cat' },
@@ -20,6 +21,7 @@ const AddPet = () => {
     const axiosSecure = useAxiosSecure()
     const axiosPublic = useAxiosPublic()
     const { register, handleSubmit, control, formState: { errors } } = useForm();
+    const navigate = useNavigate();
 
     const onSubmit = async (data) => {
         //get the image url using api
@@ -56,6 +58,8 @@ const AddPet = () => {
                     timer: 1500
                 });
             }
+            navigate('/dashboard/myPets')
+
         }
 
     };

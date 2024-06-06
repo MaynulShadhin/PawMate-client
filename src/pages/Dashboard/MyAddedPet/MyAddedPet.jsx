@@ -1,10 +1,11 @@
 import { useReactTable, flexRender, getCoreRowModel } from '@tanstack/react-table'
-import { useContext, useMemo, useState } from 'react';
+import { useContext, useMemo} from 'react';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { AuthContext } from '../../../Provider/FirebaseProvider';
 import { useQuery } from '@tanstack/react-query';
 import { MdDelete, MdEditSquare } from 'react-icons/md';
-import { FaDeleteLeft } from 'react-icons/fa6';
+import Swal from 'sweetalert2';
+import { toast } from 'react-toastify';
 
 const MyAddedPet = () => {
     const axiosSecure = useAxiosSecure()
@@ -19,7 +20,35 @@ const MyAddedPet = () => {
 
     //delete option
     const handleDelete = (petId) => {
-        console.log(petId)
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    const { data } = await axiosSecure.delete(`${import.meta.env.VITE_API_URL}/pet/${petId}`)
+                    console.log(data)
+                    if (data.deletedCount > 0) {
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "Your file has been deleted.",
+                            icon: "success"
+                        });
+                    }
+                    refetch()
+                }
+                catch (err) {
+                    console.log(err)
+                    toast.error(err.message)
+                }
+
+            }
+        })
     };
 
     const data = useMemo(() => pets, [pets])
@@ -28,13 +57,13 @@ const MyAddedPet = () => {
     const columns = [
         {
             header: "#",
-            cell: (cell)=> cell.row.index+1
+            cell: (cell) => cell.row.index + 1
         },
         {
             accessorKey: 'pet_image',
             header: 'Pet Image',
-            cell: (cell)=> {
-                return <img className='h-12 w-12 rounded-full' src={cell.getValue()}/>
+            cell: (cell) => {
+                return <img className='h-12 w-12 rounded-full' src={cell.getValue()} />
             }
         },
         {
@@ -77,7 +106,7 @@ const MyAddedPet = () => {
     ]
 
     const table = useReactTable({
-        data, columns, getCoreRowModel:getCoreRowModel()
+        data, columns, getCoreRowModel: getCoreRowModel()
     });
 
     return (
