@@ -3,6 +3,8 @@ import { Controller, useForm } from "react-hook-form";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAxiosPublic from '../../../hooks/useAxiosPublic';
 import Swal from 'sweetalert2';
+import { useContext } from 'react';
+import { AuthContext } from '../../../Provider/FirebaseProvider';
 const petCategories = [
     { value: 'Dog', label: 'Dog' },
     { value: 'Cat', label: 'Cat' },
@@ -14,6 +16,7 @@ const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`
 
 const AddPet = () => {
+    const {user} = useContext(AuthContext)
     const axiosSecure = useAxiosSecure()
     const axiosPublic = useAxiosPublic()
     const { register, handleSubmit, control, formState: { errors } } = useForm();
@@ -30,6 +33,7 @@ const AddPet = () => {
         if (res.data.success) {
             //send the data to server
             const petData = {
+                email: user.email,
                 pet_image: res.data.data.display_url,
                 pet_name: data.name,
                 pet_age: parseInt(data.age),

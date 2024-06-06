@@ -16,8 +16,9 @@ const Dropdown = () => {
           >
             <img
               className="object-cover w-12 h-12 rounded-full ring ring-gray-300"
-              src={user.photoURL}
-              alt="Profile"
+              src={user?.photoURL}
+              alt=""
+              title={user?.displayName}
             />
           </button>
 

@@ -13,6 +13,7 @@ import DonationDetails from "../pages/Donation/Component/DonationDetails";
 import Dashboard from "../layouts/Dashboard";
 import AddPet from "../pages/Dashboard/AddPet/AddPet";
 import PrivateRoute from "./Private Routes/PrivateRoute";
+import MyAddedPet from "../pages/Dashboard/MyAddedPet/MyAddedPet";
 
 const router = createBrowserRouter([
   {
@@ -63,6 +64,10 @@ const router = createBrowserRouter([
         path: 'addPet',
         element: <PrivateRoute><AddPet></AddPet></PrivateRoute>
       },
+      {
+        path: 'myPets',
+        element: <MyAddedPet></MyAddedPet>
+      }
     ]
   }
 ]);
