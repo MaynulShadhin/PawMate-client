@@ -1,4 +1,10 @@
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 import PropTypes from 'prop-types';
+import CheckoutForm from './CheckoutForm';
+
+const stripePromise= loadStripe(import.meta.env.VITE_PAYMENT_GATEWAY_KEY);
+
 const DonateModal = ({ setIsModalOpen }) => {
     return (
         <div>
@@ -13,9 +19,9 @@ const DonateModal = ({ setIsModalOpen }) => {
                             &times;
                         </button>
                     </div>
-                    <form>
-                        {/*  */}
-                    </form>
+                    <Elements stripe={stripePromise}>
+                        <CheckoutForm></CheckoutForm>
+                    </Elements>
                 </div>
             </div>
         </div>
