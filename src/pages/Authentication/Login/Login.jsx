@@ -4,9 +4,11 @@ import { FaGoogle, FaTwitter } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../Provider/FirebaseProvider";
 import { toast } from "react-toastify";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
 
 const Login = () => {
     const [error, setError] = useState('')
+    const axiosPublic = useAxiosPublic();
     const { signInUser, googleLogin } = useContext(AuthContext)
     const navigate = useNavigate()
     const location = useLocation()
@@ -36,6 +38,16 @@ const Login = () => {
         try {
             const res = await googleLogin()
             console.log(res.user)
+            const userInfo = {
+                email: res.user?.email,
+                name: res.user?.displayName,
+                image: res.user?.photoURL,
+                role: "user"
+            }
+            axiosPublic.post('/users',userInfo)
+            .then(res=>{
+                console.log(res.data)
+            })
             toast.success("Login Successful")
             navigate(from)
         }

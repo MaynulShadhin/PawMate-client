@@ -8,6 +8,8 @@ const Dashboard = () => {
 
     const handleClose = () => setIsOpen(false);
 
+    const isAdmin = true;
+
     return (
         <div>
             <div>
@@ -24,26 +26,63 @@ const Dashboard = () => {
                             <div className="flex h-full flex-col justify-between py-2">
                                 <div>
                                     <Sidebar.Items>
-                                        <Sidebar.ItemGroup>
-                                            <NavLink to="/dashboard/addPet" className={({ isActive }) => isActive ? "text-lg mr-4 font-semi-bold border-b-2 border-[#F07C3D] text-[#F07C3D] block" : "text-lg mr-4 font-semi-bold text-gray-700 hover:text-[#F07C3D] block"}>
-                                                Add A pet
-                                            </NavLink>
-                                            <NavLink to="/dashboard/myPets" className={({ isActive }) => isActive ? "text-lg mr-4 font-semi-bold border-b-2 border-[#F07C3D] text-[#F07C3D] block" : "text-lg mr-4 font-semi-bold text-gray-700 hover:text-[#F07C3D] block"}>
-                                                My Added pets
-                                            </NavLink>
-                                            <NavLink to="/dashboard/adoptionRequests" className={({ isActive }) => isActive ? "text-lg mr-4 font-semi-bold border-b-2 border-[#F07C3D] text-[#F07C3D] block" : "text-lg mr-4 font-semi-bold text-gray-700 hover:text-[#F07C3D] block"}>
-                                                Adoption Request
-                                            </NavLink>
-                                            <NavLink to="/dashboard/createCampaign" className={({ isActive }) => isActive ? "text-lg mr-4 font-semi-bold border-b-2 border-[#F07C3D] text-[#F07C3D] block" : "text-lg mr-4 font-semi-bold text-gray-700 hover:text-[#F07C3D] block"}>
-                                                Create Donation Campaign
-                                            </NavLink>
-                                            <NavLink to="/dashboard/myCampaigns" className={({ isActive }) => isActive ? "text-lg mr-4 font-semi-bold border-b-2 border-[#F07C3D] text-[#F07C3D] block" : "text-lg mr-4 font-semi-bold text-gray-700 hover:text-[#F07C3D] block"}>
-                                                My Donation Campaigns
-                                            </NavLink>
-                                            <NavLink to="/dashboard/myDonations" className={({ isActive }) => isActive ? "text-lg mr-4 font-semi-bold border-b-2 border-[#F07C3D] text-[#F07C3D] block" : "text-lg mr-4 font-semi-bold text-gray-700 hover:text-[#F07C3D] block"}>
-                                                My Donations
-                                            </NavLink>
-                                        </Sidebar.ItemGroup>
+                                        {
+                                            isAdmin ? <>
+                                                <Sidebar.ItemGroup>
+                                                    {/* admin routes */}
+                                                    <NavLink to="/dashboard/users" className={({ isActive }) => isActive ? "text-lg mr-4 font-semi-bold border-b-2 border-[#F07C3D] text-[#F07C3D] block" : "text-lg mr-4 font-semi-bold text-gray-700 hover:text-[#F07C3D] block"}>
+                                                        Users
+                                                    </NavLink>
+                                                    <NavLink to="/dashboard/allPets" className={({ isActive }) => isActive ? "text-lg mr-4 font-semi-bold border-b-2 border-[#F07C3D] text-[#F07C3D] block" : "text-lg mr-4 font-semi-bold text-gray-700 hover:text-[#F07C3D] block"}>
+                                                        All Pets
+                                                    </NavLink>
+                                                    <NavLink to="/dashboard/allDonations" className={({ isActive }) => isActive ? "text-lg mr-4 font-semi-bold border-b-2 border-[#F07C3D] text-[#F07C3D] block" : "text-lg mr-4 font-semi-bold text-gray-700 hover:text-[#F07C3D] block"}>
+                                                        All Donations
+                                                    </NavLink>
+                                                    {/* all routes */}
+                                                    <NavLink to="/dashboard/addPet" className={({ isActive }) => isActive ? "text-lg mr-4 font-semi-bold border-b-2 border-[#F07C3D] text-[#F07C3D] block" : "text-lg mr-4 font-semi-bold text-gray-700 hover:text-[#F07C3D] block"}>
+                                                        Add A pet
+                                                    </NavLink>
+                                                    <NavLink to="/dashboard/myPets" className={({ isActive }) => isActive ? "text-lg mr-4 font-semi-bold border-b-2 border-[#F07C3D] text-[#F07C3D] block" : "text-lg mr-4 font-semi-bold text-gray-700 hover:text-[#F07C3D] block"}>
+                                                        My Added pets
+                                                    </NavLink>
+                                                    <NavLink to="/dashboard/adoptionRequests" className={({ isActive }) => isActive ? "text-lg mr-4 font-semi-bold border-b-2 border-[#F07C3D] text-[#F07C3D] block" : "text-lg mr-4 font-semi-bold text-gray-700 hover:text-[#F07C3D] block"}>
+                                                        Adoption Request
+                                                    </NavLink>
+                                                    <NavLink to="/dashboard/createCampaign" className={({ isActive }) => isActive ? "text-lg mr-4 font-semi-bold border-b-2 border-[#F07C3D] text-[#F07C3D] block" : "text-lg mr-4 font-semi-bold text-gray-700 hover:text-[#F07C3D] block"}>
+                                                        Create Donation Campaign
+                                                    </NavLink>
+                                                    <NavLink to="/dashboard/myCampaigns" className={({ isActive }) => isActive ? "text-lg mr-4 font-semi-bold border-b-2 border-[#F07C3D] text-[#F07C3D] block" : "text-lg mr-4 font-semi-bold text-gray-700 hover:text-[#F07C3D] block"}>
+                                                        My Donation Campaigns
+                                                    </NavLink>
+                                                    <NavLink to="/dashboard/myDonations" className={({ isActive }) => isActive ? "text-lg mr-4 font-semi-bold border-b-2 border-[#F07C3D] text-[#F07C3D] block" : "text-lg mr-4 font-semi-bold text-gray-700 hover:text-[#F07C3D] block"}>
+                                                        My Donations
+                                                    </NavLink>
+                                                </Sidebar.ItemGroup>
+                                            </> : <>
+                                                <Sidebar.ItemGroup>
+                                                    <NavLink to="/dashboard/addPet" className={({ isActive }) => isActive ? "text-lg mr-4 font-semi-bold border-b-2 border-[#F07C3D] text-[#F07C3D] block" : "text-lg mr-4 font-semi-bold text-gray-700 hover:text-[#F07C3D] block"}>
+                                                        Add A pet
+                                                    </NavLink>
+                                                    <NavLink to="/dashboard/myPets" className={({ isActive }) => isActive ? "text-lg mr-4 font-semi-bold border-b-2 border-[#F07C3D] text-[#F07C3D] block" : "text-lg mr-4 font-semi-bold text-gray-700 hover:text-[#F07C3D] block"}>
+                                                        My Added pets
+                                                    </NavLink>
+                                                    <NavLink to="/dashboard/adoptionRequests" className={({ isActive }) => isActive ? "text-lg mr-4 font-semi-bold border-b-2 border-[#F07C3D] text-[#F07C3D] block" : "text-lg mr-4 font-semi-bold text-gray-700 hover:text-[#F07C3D] block"}>
+                                                        Adoption Request
+                                                    </NavLink>
+                                                    <NavLink to="/dashboard/createCampaign" className={({ isActive }) => isActive ? "text-lg mr-4 font-semi-bold border-b-2 border-[#F07C3D] text-[#F07C3D] block" : "text-lg mr-4 font-semi-bold text-gray-700 hover:text-[#F07C3D] block"}>
+                                                        Create Donation Campaign
+                                                    </NavLink>
+                                                    <NavLink to="/dashboard/myCampaigns" className={({ isActive }) => isActive ? "text-lg mr-4 font-semi-bold border-b-2 border-[#F07C3D] text-[#F07C3D] block" : "text-lg mr-4 font-semi-bold text-gray-700 hover:text-[#F07C3D] block"}>
+                                                        My Donation Campaigns
+                                                    </NavLink>
+                                                    <NavLink to="/dashboard/myDonations" className={({ isActive }) => isActive ? "text-lg mr-4 font-semi-bold border-b-2 border-[#F07C3D] text-[#F07C3D] block" : "text-lg mr-4 font-semi-bold text-gray-700 hover:text-[#F07C3D] block"}>
+                                                        My Donations
+                                                    </NavLink>
+                                                </Sidebar.ItemGroup>
+                                            </>
+                                        }
+                                        {/* sharred nav links */}
                                         <Sidebar.ItemGroup>
                                             <NavLink to="/" className={({ isActive }) => isActive ? "text-lg mr-4 font-semi-bold border-b-2 border-[#F07C3D] text-[#F07C3D]" : "text-lg mr-4 font-semi-bold text-gray-700 hover:text-[#F07C3D]"}>
                                                 Home

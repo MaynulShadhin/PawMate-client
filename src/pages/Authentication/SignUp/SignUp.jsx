@@ -4,10 +4,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../Provider/FirebaseProvider";
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
 
 const SignUp = () => {
     const [error, setError] = useState('')
-    const { createUser, updateUser,logout } = useContext(AuthContext);
+    const axiosPublic = useAxiosPublic();
+    const { createUser, updateUser, logout } = useContext(AuthContext);
     const navigate = useNavigate()
     const {
         register,
@@ -33,14 +35,34 @@ const SignUp = () => {
 
         //create user
         createUser(email, password)
-            .then(() => {
-                //update user
+            .then((userCredential) => {
+                const user = userCredential.user;
+                // Update user profile
                 updateUser(fullName, image)
                     .then(() => {
-                        toast.success('Sign Up Successful!')
-                        logout()
-                        navigate('/login')
+                        const userInfo = {
+                            email: user.email,
+                            name: fullName,
+                            image: image,
+                            role: "user"
+                        };
+                        // Save user info in the database
+                        axiosPublic.post('/users', userInfo)
+                            .then(res => {
+                                console.log(res.data);
+                                toast.success('Sign Up Successful!');
+                                logout();
+                                navigate('/login');
+                            })
+                            .catch(err => {
+                                setError('Failed to save user information');
+                                console.error(err);
+                            });
                     })
+                    .catch((error) => {
+                        setError('Failed to update user profile');
+                        console.error(error);
+                    });
             })
             .catch(() => {
                 setError("email already in use")

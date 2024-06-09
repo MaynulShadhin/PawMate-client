@@ -15,6 +15,7 @@ import AddPet from "../pages/Dashboard/AddPet/AddPet";
 import PrivateRoute from "./Private Routes/PrivateRoute";
 import MyAddedPet from "../pages/Dashboard/MyAddedPet/MyAddedPet";
 import UpdatePet from "../pages/Dashboard/UpdatePet/UpdatePet";
+import Users from "../pages/Dashboard/Users/Users";
 
 const router = createBrowserRouter([
   {
@@ -61,6 +62,13 @@ const router = createBrowserRouter([
     path: 'dashboard',
     element: <Dashboard></Dashboard>,
     children: [
+      // admin routes
+      {
+        path: 'users',
+        element: <PrivateRoute><Users></Users></PrivateRoute>
+      },
+      
+      // all routes
       {
         path: 'addPet',
         element: <PrivateRoute><AddPet></AddPet></PrivateRoute>

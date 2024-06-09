@@ -120,7 +120,7 @@ const MyAddedPet = () => {
                         !row.original.adopted ? <button
                             onClick={() => handleAdopted(row.original._id)}
                             className='bg-[#F07C3D] text-white px-2 py-1 font-medium rounded-md'>
-                            Adopted
+                            Not Adopted
                         </button> : <button disabled
                             className='bg-gray-300 text-white px-2 py-1 font-medium rounded-md'>
                             Adopted
@@ -186,12 +186,16 @@ const MyAddedPet = () => {
                     ))}
                 </tbody>
             </table>
-            <div className='flex gap-4 mt-8 items-center justify-center'>
-                <button onClick={() => table.setPageIndex(0)} className="bg-[#F07C3D] hover:bg-white hover:border-2 border-slate-800 hover:text-black transition duration-75 text-white px-2 py-1">First page</button>
-                <button disabled={!table.getCanPreviousPage()} onClick={() => table.previousPage()} className="bg-[#F07C3D] hover:bg-white hover:border-2 border-slate-800 hover:text-black transition duration-75 text-white px-2 py-1">Prev page</button>
-                <button disabled={!table.getCanNextPage()} onClick={() => table.nextPage()} className="bg-[#F07C3D] hover:bg-white hover:border-2 border-slate-800 hover:text-black transition duration-75 text-white px-2 py-1">Next page</button>
-                <button onClick={() => table.setPageIndex(table.getPageCount() - 1)} className="bg-[#F07C3D] hover:bg-white hover:border-2 border-slate-800 hover:text-black transition duration-75 text-white px-2 py-1">Last page</button>
-            </div>
+
+            {pets.length > 10 && (
+                <div className='flex gap-4 mt-8 items-center justify-center'>
+                    <button onClick={() => table.setPageIndex(0)} className="bg-[#F07C3D] hover:bg-white hover:border-2 border-slate-800 hover:text-black transition duration-75 text-white px-2 py-1">First page</button>
+                    <button disabled={!table.getCanPreviousPage()} onClick={() => table.previousPage()} className="bg-[#F07C3D] hover:bg-white hover:border-2 border-slate-800 hover:text-black transition duration-75 text-white px-2 py-1">Prev page</button>
+                    <button disabled={!table.getCanNextPage()} onClick={() => table.nextPage()} className="bg-[#F07C3D] hover:bg-white hover:border-2 border-slate-800 hover:text-black transition duration-75 text-white px-2 py-1">Next page</button>
+                    <button onClick={() => table.setPageIndex(table.getPageCount() - 1)} className="bg-[#F07C3D] hover:bg-white hover:border-2 border-slate-800 hover:text-black transition duration-75 text-white px-2 py-1">Last page</button>
+                </div>
+            )}
+
         </div>
     );
 };
