@@ -2,13 +2,14 @@ import { Button, Drawer, Sidebar } from "flowbite-react";
 import { useState } from "react";
 import { FaAlignLeft } from "react-icons/fa";
 import { NavLink, Outlet } from "react-router-dom";
+import useAdmin from "../hooks/useAdmin";
 
 const Dashboard = () => {
     const [isOpen, setIsOpen] = useState(true);
 
     const handleClose = () => setIsOpen(false);
 
-    const isAdmin = true;
+    const [isAdmin] = useAdmin();
 
     return (
         <div>
@@ -82,7 +83,7 @@ const Dashboard = () => {
                                                 </Sidebar.ItemGroup>
                                             </>
                                         }
-                                        {/* sharred nav links */}
+                                        {/* shared nav links */}
                                         <Sidebar.ItemGroup>
                                             <NavLink to="/" className={({ isActive }) => isActive ? "text-lg mr-4 font-semi-bold border-b-2 border-[#F07C3D] text-[#F07C3D]" : "text-lg mr-4 font-semi-bold text-gray-700 hover:text-[#F07C3D]"}>
                                                 Home

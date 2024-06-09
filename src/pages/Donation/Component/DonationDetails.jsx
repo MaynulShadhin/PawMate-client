@@ -1,7 +1,15 @@
-import {  useLoaderData } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
+import DonateModal from "./DonateModal";
+import { useState } from "react";
 
 const DonationDetails = () => {
     const donation = useLoaderData()
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const handleDonation = () => {
+        setIsModalOpen(true);
+    }
+
     return (
         <div className="bg-gray-100 py-20">
             <div className="max-w-4xl mx-auto">
@@ -13,12 +21,13 @@ const DonationDetails = () => {
                         <p className="text-gray-600 mb-2"><span className="font-bold">Donated Amount:</span> ${donation.donated_amount}</p>
                         {/* Displaying Date */}
                         {/* <p className="text-gray-600 mb-4"><span className="font-bold">Date:</span> {formatDate(donation.created_at)}</p> */}
-                        <button className="block w-full bg-[#F07C3D] text-white py-2 px-4 rounded hover:bg-[#ee6c26]">
+                        <button onClick={handleDonation} className="block w-full bg-[#F07C3D] text-white py-2 px-4 rounded hover:bg-[#ee6c26]">
                             Donate Now
                         </button>
                     </div>
                 </div>
             </div>
+            {isModalOpen && <DonateModal setIsModalOpen={setIsModalOpen}></DonateModal>}
         </div>
     );
 };

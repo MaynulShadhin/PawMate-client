@@ -16,6 +16,7 @@ import PrivateRoute from "./Private Routes/PrivateRoute";
 import MyAddedPet from "../pages/Dashboard/MyAddedPet/MyAddedPet";
 import UpdatePet from "../pages/Dashboard/UpdatePet/UpdatePet";
 import Users from "../pages/Dashboard/Users/Users";
+import AdminRoutes from "./Admin Routes/AdminRoutes";
 
 const router = createBrowserRouter([
   {
@@ -65,9 +66,9 @@ const router = createBrowserRouter([
       // admin routes
       {
         path: 'users',
-        element: <PrivateRoute><Users></Users></PrivateRoute>
+        element: <PrivateRoute><AdminRoutes><Users></Users></AdminRoutes></PrivateRoute>
       },
-      
+
       // all routes
       {
         path: 'addPet',
@@ -80,7 +81,7 @@ const router = createBrowserRouter([
       {
         path: 'updatePet/:id',
         element: <UpdatePet></UpdatePet>,
-        loader: ({params})=>fetch(`${import.meta.env.VITE_API_URL}/pet/${params.id}`)
+        loader: ({ params }) => fetch(`${import.meta.env.VITE_API_URL}/pet/${params.id}`)
       }
     ]
   }
