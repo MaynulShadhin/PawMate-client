@@ -1,10 +1,26 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { AuthContext } from "../../../Provider/FirebaseProvider";
+import Swal from "sweetalert2";
 
 const CheckoutForm = () => {
-    const [error, setError] = useState()
+    const [error, setError] = useState();
+    const [donationAmount, setDonationAmount] = useState('');
+    const { user } = useContext(AuthContext)
+    const [clientSecret, setClientSecret] = useState('');
     const stripe = useStripe();
     const elements = useElements();
+    const axiosSecure = useAxiosSecure();
+
+    useEffect(() => {
+        if (donationAmount) {
+            axiosSecure.post('/create-payment-intent', { donate: donationAmount })
+                .then(res => {
+                    setClientSecret(res.data.clientSecret);
+                })
+        }
+    }, [axiosSecure, donationAmount])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -30,11 +46,45 @@ const CheckoutForm = () => {
             console.log('payment method', paymentMethod)
             setError('')
         }
+        //confirm payment
+        const { paymentIntent, error: confirmError } = await stripe.confirmCardPayment(clientSecret, {
+            payment_method: {
+                card: card,
+                billing_details: {
+                    email: user?.email,
+                    name: user?.displayName || "anonymous"
+                }
+            }
+        })
+
+        if (confirmError) {
+            console.log('confirm error')
+        }
+        else {
+            console.log('payment intent', paymentIntent)
+            if(paymentIntent.status === "succeeded"){
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: "Donation Successful",
+                    showConfirmButton: false,
+                    timer: 1500
+                  });
+            }
+        }
     }
 
     return (
         <div>
             <form onSubmit={handleSubmit}>
+                <input
+                    className="mb-4 w-full"
+                    type="number"
+                    value={donationAmount}
+                    onChange={(e) => setDonationAmount(e.target.value)}
+                    placeholder="Enter amount"
+                    required
+                />
                 <CardElement
                     options={{
                         style: {
@@ -52,7 +102,7 @@ const CheckoutForm = () => {
                     }}
                 />
                 <div className="flex items-center w-full justify-center">
-                    <button className="font-medium bg-[#F07C3D] text-white mt-8 px-3 py-1 rounded-sm" type="submit" disabled={!stripe}>
+                    <button className="font-medium bg-[#F07C3D] text-white mt-8 px-3 py-1 rounded-sm" type="submit" disabled={!stripe || !clientSecret}>
                         Donate
                     </button>
                 </div>
@@ -61,5 +111,4 @@ const CheckoutForm = () => {
         </div>
     );
 };
-
 export default CheckoutForm;

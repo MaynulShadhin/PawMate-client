@@ -17,6 +17,7 @@ import MyAddedPet from "../pages/Dashboard/MyAddedPet/MyAddedPet";
 import UpdatePet from "../pages/Dashboard/UpdatePet/UpdatePet";
 import Users from "../pages/Dashboard/Users/Users";
 import AdminRoutes from "./Admin Routes/AdminRoutes";
+import AddDonation from "../pages/Dashboard/Add Donation/AddDonation";
 
 const router = createBrowserRouter([
   {
@@ -82,6 +83,10 @@ const router = createBrowserRouter([
         path: 'updatePet/:id',
         element: <UpdatePet></UpdatePet>,
         loader: ({ params }) => fetch(`${import.meta.env.VITE_API_URL}/pet/${params.id}`)
+      },
+      {
+        path: 'createCampaign',
+        element: <AddDonation></AddDonation>
       }
     ]
   }

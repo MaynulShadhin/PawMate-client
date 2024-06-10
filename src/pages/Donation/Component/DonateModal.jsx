@@ -3,7 +3,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import PropTypes from 'prop-types';
 import CheckoutForm from './CheckoutForm';
 
-const stripePromise= loadStripe(import.meta.env.VITE_PAYMENT_GATEWAY_KEY);
+const stripePromise = loadStripe(import.meta.env.VITE_PAYMENT_GATEWAY_KEY);
 
 const DonateModal = ({ setIsModalOpen }) => {
     return (
@@ -28,6 +28,7 @@ const DonateModal = ({ setIsModalOpen }) => {
     );
 };
 DonateModal.propTypes = {
+    donation: PropTypes.object,
     setIsModalOpen: PropTypes.func
 }
 export default DonateModal;
