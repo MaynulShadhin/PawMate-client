@@ -5,7 +5,7 @@ import CheckoutForm from './CheckoutForm';
 
 const stripePromise = loadStripe(import.meta.env.VITE_PAYMENT_GATEWAY_KEY);
 
-const DonateModal = ({ setIsModalOpen }) => {
+const DonateModal = ({ setIsModalOpen, donation }) => {
     return (
         <div>
             <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
@@ -20,7 +20,7 @@ const DonateModal = ({ setIsModalOpen }) => {
                         </button>
                     </div>
                     <Elements stripe={stripePromise}>
-                        <CheckoutForm></CheckoutForm>
+                        <CheckoutForm donation={donation}></CheckoutForm>
                     </Elements>
                 </div>
             </div>

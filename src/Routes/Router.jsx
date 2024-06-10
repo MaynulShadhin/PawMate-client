@@ -18,6 +18,7 @@ import UpdatePet from "../pages/Dashboard/UpdatePet/UpdatePet";
 import Users from "../pages/Dashboard/Users/Users";
 import AdminRoutes from "./Admin Routes/AdminRoutes";
 import AddDonation from "../pages/Dashboard/Add Donation/AddDonation";
+import MyCamps from "../pages/Dashboard/My Donation Camp/MyCamps";
 
 const router = createBrowserRouter([
   {
@@ -87,6 +88,10 @@ const router = createBrowserRouter([
       {
         path: 'createCampaign',
         element: <AddDonation></AddDonation>
+      },
+      {
+        path: 'myCampaigns',
+        element: <MyCamps></MyCamps>
       }
     ]
   }

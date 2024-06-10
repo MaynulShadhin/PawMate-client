@@ -3,8 +3,10 @@ import { useContext, useEffect, useState } from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { AuthContext } from "../../../Provider/FirebaseProvider";
 import Swal from "sweetalert2";
+import PropTypes from 'prop-types';
 
-const CheckoutForm = () => {
+const CheckoutForm = ({ donation }) => {
+    const { _id, petName, email, pet_image } = donation
     const [error, setError] = useState();
     const [donationAmount, setDonationAmount] = useState('');
     const { user } = useContext(AuthContext)
@@ -62,14 +64,28 @@ const CheckoutForm = () => {
         }
         else {
             console.log('payment intent', paymentIntent)
-            if(paymentIntent.status === "succeeded"){
+            if (paymentIntent.status === "succeeded") {
                 Swal.fire({
                     position: "center",
                     icon: "success",
                     title: "Donation Successful",
                     showConfirmButton: false,
                     timer: 1500
-                  });
+                });
+
+                //now save the payment in db
+                const payment = {
+                    donatedAmount: parseInt(donationAmount),
+                    postId: _id,
+                    email: user.email,
+                    date: new Date(),
+                    transactionId: paymentIntent.id,
+                    postOwnerEmail: email,
+                    pet_image,
+                    petName
+                }
+                const res = await axiosSecure.post('/donates', payment)
+                console.log(res)
             }
         }
     }
@@ -111,4 +127,8 @@ const CheckoutForm = () => {
         </div>
     );
 };
+
+CheckoutForm.propTypes = {
+    donation: PropTypes.object,
+}
 export default CheckoutForm;

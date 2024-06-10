@@ -50,7 +50,7 @@ const AddDonation = () => {
                     timer: 1500
                 });
             }
-            // navigate('/dashboard/myPets')
+            navigate('/dashboard/myCampaigns')
 
         }
     }
