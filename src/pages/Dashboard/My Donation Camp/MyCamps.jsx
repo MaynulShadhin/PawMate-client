@@ -5,6 +5,7 @@ import { AuthContext } from "../../../Provider/FirebaseProvider";
 import { FaEdit, FaPause, FaPlay } from "react-icons/fa";
 import { Progress } from "flowbite-react";
 import DonatorsModal from "./DonatorsModal";
+import { Link } from "react-router-dom";
 
 const MyCamps = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -19,24 +20,24 @@ const MyCamps = () => {
         }
     })
 
-    const handlePause = async(id)=>{
-        try{
+    const handlePause = async (id) => {
+        try {
             await axiosSecure.patch(`/donation-camp/pause/${id}`);
             console.log('paused successful')
             refetch()
         }
-        catch(err){
+        catch (err) {
             console.error('Failed to pause', err)
         }
     }
 
-    const handleUnpause = async(id)=>{
-        try{
+    const handleUnpause = async (id) => {
+        try {
             await axiosSecure.patch(`/donation-camp/unpause/${id}`);
             console.log('unpaused successful')
             refetch()
         }
-        catch(err){
+        catch (err) {
             console.error('Failed to unpause', err)
         }
     }
@@ -95,9 +96,11 @@ const MyCamps = () => {
                                                 </div>
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                                    <FaEdit className="text-2xl"></FaEdit>
-                                                </a>
+                                                <Link to={`/dashboard/updateCamp/${donation._id}`}>
+                                                    <button className="text-indigo-600 hover:text-indigo-900">
+                                                        <FaEdit className="text-2xl"></FaEdit>
+                                                    </button>
+                                                </Link>
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                                 {donation.pause ? (

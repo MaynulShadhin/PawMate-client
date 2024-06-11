@@ -49,7 +49,7 @@ const UpdatePet = () => {
                 Swal.fire({
                     position: "center",
                     icon: "success",
-                    title: `${data.name} is updated to the menu.`,
+                    title: `${data.name} is updated.`,
                     showConfirmButton: false,
                     timer: 1500
                   });

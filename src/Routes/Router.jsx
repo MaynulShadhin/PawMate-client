@@ -19,6 +19,7 @@ import Users from "../pages/Dashboard/Users/Users";
 import AdminRoutes from "./Admin Routes/AdminRoutes";
 import AddDonation from "../pages/Dashboard/Add Donation/AddDonation";
 import MyCamps from "../pages/Dashboard/My Donation Camp/MyCamps";
+import UpdateCamp from "../pages/Dashboard/UpdateCamp/UpdateCamp";
 
 const router = createBrowserRouter([
   {
@@ -78,20 +79,25 @@ const router = createBrowserRouter([
       },
       {
         path: 'myPets',
-        element: <MyAddedPet></MyAddedPet>
+        element: <PrivateRoute><MyAddedPet></MyAddedPet></PrivateRoute>
       },
       {
         path: 'updatePet/:id',
-        element: <UpdatePet></UpdatePet>,
+        element: <PrivateRoute><UpdatePet></UpdatePet></PrivateRoute>,
         loader: ({ params }) => fetch(`${import.meta.env.VITE_API_URL}/pet/${params.id}`)
       },
       {
         path: 'createCampaign',
-        element: <AddDonation></AddDonation>
+        element: <PrivateRoute><AddDonation></AddDonation></PrivateRoute>
       },
       {
         path: 'myCampaigns',
-        element: <MyCamps></MyCamps>
+        element: <PrivateRoute><MyCamps></MyCamps></PrivateRoute>
+      },
+      {
+        path: 'updateCamp/:id',
+        element: <PrivateRoute><UpdateCamp></UpdateCamp></PrivateRoute>,
+        loader: ({params}) => fetch(`${import.meta.env.VITE_API_URL}/donation-camp/${params.id}`)
       }
     ]
   }
