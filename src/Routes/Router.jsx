@@ -21,6 +21,8 @@ import AddDonation from "../pages/Dashboard/Add Donation/AddDonation";
 import MyCamps from "../pages/Dashboard/My Donation Camp/MyCamps";
 import UpdateCamp from "../pages/Dashboard/UpdateCamp/UpdateCamp";
 import MyDonations from "../pages/Dashboard/My donations/MyDonations";
+import AdoptionReq from "../pages/Dashboard/Adoption Requests/AdoptionReq";
+import AllPets from "../pages/Dashboard/All Pets/AllPets";
 
 const router = createBrowserRouter([
   {
@@ -72,6 +74,10 @@ const router = createBrowserRouter([
         path: 'users',
         element: <PrivateRoute><AdminRoutes><Users></Users></AdminRoutes></PrivateRoute>
       },
+      {
+        path: 'allPets',
+        element: <PrivateRoute><AdminRoutes><AllPets></AllPets></AdminRoutes></PrivateRoute>
+      },
 
       // all routes
       {
@@ -98,11 +104,15 @@ const router = createBrowserRouter([
       {
         path: 'updateCamp/:id',
         element: <PrivateRoute><UpdateCamp></UpdateCamp></PrivateRoute>,
-        loader: ({params}) => fetch(`${import.meta.env.VITE_API_URL}/donation-camp/${params.id}`)
+        loader: ({ params }) => fetch(`${import.meta.env.VITE_API_URL}/donation-camp/${params.id}`)
       },
       {
         path: 'myDonations',
-        element: <MyDonations></MyDonations>
+        element: <PrivateRoute><MyDonations></MyDonations></PrivateRoute>
+      },
+      {
+        path: 'adoptionRequests',
+        element: <PrivateRoute><AdoptionReq></AdoptionReq></PrivateRoute>
       }
     ]
   }
