@@ -28,7 +28,7 @@ const UpdateCamp = () => {
                 shortDescription: data.shortDescription,
                 longDescription: data.longDescription,
             }
-            const donationRes = await axiosSecure.patch(`/donation-camp/${_id}`, donationData);
+            const donationRes = await axiosSecure.patch(`/updateDonation-camp/${_id}`, donationData);
             if (donationRes.data.modifiedCount > 0) {
                 Swal.fire({
                     position: "center",

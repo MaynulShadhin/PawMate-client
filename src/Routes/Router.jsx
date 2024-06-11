@@ -23,6 +23,7 @@ import UpdateCamp from "../pages/Dashboard/UpdateCamp/UpdateCamp";
 import MyDonations from "../pages/Dashboard/My donations/MyDonations";
 import AdoptionReq from "../pages/Dashboard/Adoption Requests/AdoptionReq";
 import AllPets from "../pages/Dashboard/All Pets/AllPets";
+import AllDonations from "../pages/Dashboard/All Donations/AllDonations";
 
 const router = createBrowserRouter([
   {
@@ -77,6 +78,10 @@ const router = createBrowserRouter([
       {
         path: 'allPets',
         element: <PrivateRoute><AdminRoutes><AllPets></AllPets></AdminRoutes></PrivateRoute>
+      },
+      {
+        path: 'allDonations',
+        element: <PrivateRoute><AdminRoutes><AllDonations></AllDonations></AdminRoutes></PrivateRoute>
       },
 
       // all routes

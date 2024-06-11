@@ -44,15 +44,15 @@ const UpdatePet = () => {
                 short_description: data.shortDescription,
                 long_description: data.longDescription,
             }
-            const petRes = await axiosSecure.patch(`/pet/${_id}`, petData);
-            if(petRes.data.modifiedCount > 0){
+            const petRes = await axiosSecure.patch(`/updatePet/${_id}`, petData);
+            if (petRes.data.modifiedCount > 0) {
                 Swal.fire({
                     position: "center",
                     icon: "success",
                     title: `${data.name} is updated.`,
                     showConfirmButton: false,
                     timer: 1500
-                  });
+                });
             }
         }
         console.log(res.data)
