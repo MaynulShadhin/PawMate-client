@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 
 const AllPets = () => {
     const axiosPublic = useAxiosPublic()
+    const axiosSecure = useAxiosSecure()
 
     const { data: pets = [], refetch } = useQuery({
         queryKey: ['pets'],
@@ -29,7 +30,7 @@ const AllPets = () => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    const { data } = await useAxiosSecure.delete(`${import.meta.env.VITE_API_URL}/pet/${petId}`)
+                    const { data } = await axiosSecure.delete(`${import.meta.env.VITE_API_URL}/pet/${petId}`)
                     console.log(data)
                     if (data.deletedCount > 0) {
                         Swal.fire({
@@ -51,7 +52,7 @@ const AllPets = () => {
     //adoption status change
     const handleAdoptionStatusChange = async (id, newStatus) => {
         try {
-            await axiosPublic.put(`/pet/toggleAdoption/${id}`, { adopted: newStatus });
+            await axiosSecure.put(`/pet/toggleAdoption/${id}`, { adopted: newStatus });
             refetch();
         } catch (error) {
             console.error("Error updating pet status:", error);
