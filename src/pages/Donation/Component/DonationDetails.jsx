@@ -5,6 +5,7 @@ import { useState } from "react";
 const DonationDetails = () => {
     const donation = useLoaderData()
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const isPaused = donation.pause;
 
     const handleDonation = () => {
         setIsModalOpen(true);
@@ -23,9 +24,13 @@ const DonationDetails = () => {
                         <p className="text-gray-600 mb-2"><span className="font-bold">Max Donation Amount:</span> {donation.longDescription}</p>
                         {/* Displaying Date */}
                         <p className="text-gray-600 mb-4"><span className="font-bold">Last Donation Date:</span> {donation.lastDate}</p>
-                        <button onClick={handleDonation} className="block w-full bg-[#F07C3D] text-white py-2 px-4 rounded hover:bg-[#ee6c26]">
+                        {
+                            !isPaused ? <button onClick={handleDonation} className="block w-full bg-[#F07C3D] text-white py-2 px-4 rounded hover:bg-[#ee6c26]">
                             Donate Now
+                        </button> : <button disabled onClick={handleDonation} className="block w-full bg-slate-300 text-white py-2 px-4 rounded">
+                            Donate Has Been Paused by Owner
                         </button>
+                        }
                     </div>
                 </div>
             </div>

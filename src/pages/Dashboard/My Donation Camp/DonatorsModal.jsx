@@ -5,7 +5,7 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const DonatorsModal = ({ isOpen, onClose, postId }) => {
     const [donators, setDonators] = useState([]);
-    const axiosSecure = useAxiosSecure()
+    const axiosSecure = useAxiosSecure();
 
     useEffect(() => {
         if (isOpen && postId) {
@@ -72,5 +72,9 @@ const DonatorsModal = ({ isOpen, onClose, postId }) => {
         </div>
     );
 };
-
+DonatorsModal.propTypes = {
+    isOpen: PropTypes.bool,
+    onClose: PropTypes.func,
+    postId: PropTypes.object
+}
 export default DonatorsModal;

@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../../Provider/FirebaseProvider";
-import { FaEdit, FaPause } from "react-icons/fa";
+import { FaEdit, FaPause, FaPlay } from "react-icons/fa";
 import { Progress } from "flowbite-react";
 import DonatorsModal from "./DonatorsModal";
 
@@ -11,13 +11,36 @@ const MyCamps = () => {
     const [selectedPostId, setSelectedPostId] = useState(null);
     const { user } = useContext(AuthContext)
     const axiosSecure = useAxiosSecure();
-    const { data: donations = [] } = useQuery({
+    const { data: donations = [], refetch } = useQuery({
         queryKey: ['donations', user?.email],
         queryFn: async () => {
             const res = await axiosSecure.get(`/donation-camps/${user.email}`)
             return res.data
         }
     })
+
+    const handlePause = async(id)=>{
+        try{
+            await axiosSecure.patch(`/donation-camp/pause/${id}`);
+            console.log('paused successful')
+            refetch()
+        }
+        catch(err){
+            console.error('Failed to pause', err)
+        }
+    }
+
+    const handleUnpause = async(id)=>{
+        try{
+            await axiosSecure.patch(`/donation-camp/unpause/${id}`);
+            console.log('unpaused successful')
+            refetch()
+        }
+        catch(err){
+            console.error('Failed to unpause', err)
+        }
+    }
+
     const openModal = (postId) => {
         setSelectedPostId(postId);
         setIsModalOpen(true);
@@ -77,9 +100,15 @@ const MyCamps = () => {
                                                 </a>
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                <button className="text-red-600 hover:text-red-900 focus:outline-none">
-                                                    <FaPause className="text-2xl"></FaPause>
-                                                </button>
+                                                {donation.pause ? (
+                                                    <button onClick={() => handleUnpause(donation._id)} className="text-green-600 hover:text-green-900 focus:outline-none">
+                                                        <FaPlay className="text-2xl"></FaPlay>
+                                                    </button>
+                                                ) : (
+                                                    <button onClick={() => handlePause(donation._id)} className="text-red-600 hover:text-red-900 focus:outline-none">
+                                                        <FaPause className="text-2xl"></FaPause>
+                                                    </button>
+                                                )}
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                                 <button
