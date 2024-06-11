@@ -20,6 +20,7 @@ import AdminRoutes from "./Admin Routes/AdminRoutes";
 import AddDonation from "../pages/Dashboard/Add Donation/AddDonation";
 import MyCamps from "../pages/Dashboard/My Donation Camp/MyCamps";
 import UpdateCamp from "../pages/Dashboard/UpdateCamp/UpdateCamp";
+import MyDonations from "../pages/Dashboard/My donations/MyDonations";
 
 const router = createBrowserRouter([
   {
@@ -98,6 +99,10 @@ const router = createBrowserRouter([
         path: 'updateCamp/:id',
         element: <PrivateRoute><UpdateCamp></UpdateCamp></PrivateRoute>,
         loader: ({params}) => fetch(`${import.meta.env.VITE_API_URL}/donation-camp/${params.id}`)
+      },
+      {
+        path: 'myDonations',
+        element: <MyDonations></MyDonations>
       }
     ]
   }
