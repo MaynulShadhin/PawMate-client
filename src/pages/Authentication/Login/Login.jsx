@@ -9,7 +9,7 @@ import useAxiosPublic from "../../../hooks/useAxiosPublic";
 const Login = () => {
     const [error, setError] = useState('')
     const axiosPublic = useAxiosPublic();
-    const { signInUser, googleLogin } = useContext(AuthContext)
+    const { signInUser, googleLogin,twitterSignIn } = useContext(AuthContext)
     const navigate = useNavigate()
     const location = useLocation()
     const from = location?.state || '/'
@@ -44,10 +44,33 @@ const Login = () => {
                 image: res.user?.photoURL,
                 role: "user"
             }
-            axiosPublic.post('/users',userInfo)
-            .then(res=>{
-                console.log(res.data)
-            })
+            axiosPublic.post('/users', userInfo)
+                .then(res => {
+                    console.log(res.data)
+                })
+            toast.success("Login Successful")
+            navigate(from)
+        }
+        catch (err) {
+            console.log(err)
+            toast.error(error?.message)
+        }
+    }
+    //twitter login
+    const handleTwitterLogin = async () => {
+        try {
+            const res = await twitterSignIn()
+            console.log(res.user)
+            const userInfo = {
+                email: res.user?.email,
+                name: res.user?.displayName,
+                image: res.user?.photoURL,
+                role: "user"
+            }
+            axiosPublic.post('/users', userInfo)
+                .then(res => {
+                    console.log(res.data)
+                })
             toast.success("Login Successful")
             navigate(from)
         }
@@ -89,7 +112,7 @@ const Login = () => {
                 </div>
                 <div className="flex justify-center space-x-4">
                     <FaGoogle onClick={handleGoogleLogin} className="text-2xl mr-4 cursor-pointer"></FaGoogle>
-                    <FaTwitter className="text-2xl cursor-pointer"></FaTwitter>
+                    <FaTwitter onClick={handleTwitterLogin} className="text-2xl cursor-pointer"></FaTwitter>
                 </div>
                 <p className="text-xs text-center sm:px-6 text-gray-600">Do not have an account?
                     <Link className="text-[#F07C3D] font-bold" to="/signUp"> Sign Up</Link>

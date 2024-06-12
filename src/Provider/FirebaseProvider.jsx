@@ -1,11 +1,12 @@
 import { createContext, useEffect, useState } from "react";
 import PropTypes from 'prop-types';
-import { GoogleAuthProvider, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
+import { GoogleAuthProvider, TwitterAuthProvider, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import auth from "../Firebase/Firebase.config";
 import useAxiosPublic from "../hooks/useAxiosPublic";
 
 export const AuthContext = createContext(null)
 const googleProvider = new GoogleAuthProvider;
+const twitterProvider = new TwitterAuthProvider();
 const FirebaseProvider = ({ children }) => {
     const [user, setUser] = useState(null)
     const [loading, setLoading] = useState(true)
@@ -32,6 +33,12 @@ const FirebaseProvider = ({ children }) => {
     const googleLogin = () => {
         setLoading(true)
         return signInWithPopup(auth, googleProvider)
+    }
+
+    //twitter login
+    const twitterSignIn = ()=>{
+        setLoading(true)
+        return signInWithPopup(auth, twitterProvider)
     }
 
     //logout
@@ -71,6 +78,7 @@ const FirebaseProvider = ({ children }) => {
         updateUser,
         signInUser,
         googleLogin,
+        twitterSignIn,
         logout
     }
 
