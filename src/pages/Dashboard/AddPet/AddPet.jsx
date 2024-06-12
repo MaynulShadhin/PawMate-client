@@ -67,7 +67,7 @@ const AddPet = () => {
     return (
         <div className="flex items-center justify-center w-full h-screen">
             <div>
-                <h2 className="text-4xl font-semibold">Add A Pet</h2>
+                <h2 className="text-4xl font-semibold mb-8">Add A Pet</h2>
                 <form onSubmit={handleSubmit(onSubmit)} className="max-w-xl mx-auto p-8 bg-white shadow-lg rounded-lg">
                     <div className="mb-4">
                         <label className="block text-gray-700 font-bold mb-2">Pet Image</label>

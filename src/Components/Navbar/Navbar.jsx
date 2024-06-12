@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import logo from '../../assets/logo.png'
 import { Link, NavLink } from "react-router-dom";
 import Dropdown from "./Components/Dropdown";
@@ -6,12 +6,27 @@ import { AuthContext } from "../../Provider/FirebaseProvider";
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const [theme, setTheme] = useState("light");
     const { user } = useContext(AuthContext);
+
+    useEffect(() => {
+        if (theme === "dark") {
+            document.documentElement.classList.add("dark");
+        }
+        else {
+            document.documentElement.classList.remove("dark");
+        }
+    }, [theme])
+
+    const handleTheme = () => {
+        setTheme(theme === "dark" ? "light" : "dark")
+    }
 
     const navLinks = <>
         <NavLink to="/" className={({ isActive }) => isActive ? "text-lg mr-4 font-semi-bold border-b-2 border-[#F07C3D] text-[#F07C3D]" : "text-lg mr-4 font-semi-bold text-gray-700 hover:text-[#F07C3D]"}>Home</NavLink>
         <NavLink to="/pet-listing" className={({ isActive }) => isActive ? "text-lg mr-4 font-semi-bold border-b-2 border-[#F07C3D] text-[#F07C3D]" : "text-lg mr-4 font-semi-bold text-gray-700 hover:text-[#F07C3D]"}>Pet Listing</NavLink>
         <NavLink to="/donation-camp" className={({ isActive }) => isActive ? "text-lg mr-4 font-semi-bold border-b-2 border-[#F07C3D] text-[#F07C3D]" : "text-lg mr-4 font-semi-bold text-gray-700 hover:text-[#F07C3D]"}>Donation Campaigns</NavLink>
+        <button onClick={handleTheme} className="mr-3 bg-slate-500 text-white px-2 rounded-xl">Toggle Theme</button>
     </>
 
     return (

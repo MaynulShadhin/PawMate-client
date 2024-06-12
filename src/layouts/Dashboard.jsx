@@ -12,7 +12,7 @@ const Dashboard = () => {
     const [isAdmin] = useAdmin();
 
     return (
-        <div>
+        <div className="bg-white dark:bg-slate-800">
             <div>
                 <div>
                     <Button onClick={() => setIsOpen(true)}><FaAlignLeft></FaAlignLeft></Button>

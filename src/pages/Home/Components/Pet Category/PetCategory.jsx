@@ -1,39 +1,32 @@
-
 import { Swiper, SwiperSlide } from 'swiper/react';
-
-// Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/pagination';
-
-// import required modules
 import { FreeMode, Pagination } from 'swiper/modules';
-
+import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import cat from '../../../../assets/cat.jpg'
 import dog from '../../../../assets/dog.jpg'
 import rabbit from '../../../../assets/rabbit.jpg'
 import fish from '../../../../assets/fish.jpg'
 import bird from '../../../../assets/bird.jpg'
-import { Link, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import useAxiosPublic from '../../../../hooks/useAxiosPublic';
 
 const PetCategory = () => {
-    const [pets,setPets] = useState([])
-    const{category} = useParams();
+    const [pets, setPets] = useState([])
+    const axiosPublic = useAxiosPublic()
 
-    useEffect(()=>{
-        const petsByCategory = async()=>{
-            try{
-                const res = await axios.get(`${import.meta.env.VITE_API_URL}/pets/${category}`)
-                console.log(res.data)
-            }
-            catch(err){
+    useEffect(() => {
+        const fetchPetsByCategory = async () => {
+            try {
+                const res = await axiosPublic.get('/pets')
+                setPets(res.data)
+            } catch (err) {
                 console.log(err)
             }
         }
-        petsByCategory();
-    },[category])
+        fetchPetsByCategory();
+    }, [axiosPublic])
 
     return (
         <div className="my-28 mx-auto container">
@@ -43,48 +36,42 @@ const PetCategory = () => {
                     slidesPerView={3}
                     spaceBetween={20}
                     freeMode={true}
-                    pagination={{
-                        clickable: true,
-                    }}
+                    pagination={{ clickable: true }}
                     modules={[FreeMode, Pagination]}
                     className="mySwiper"
                 >
-
                     <SwiperSlide>
-                        <Link>
+                        <Link to="/category/Cat">
                             <img src={cat} alt="" />
                             <h2 className='absolute flex items-center justify-center z-10 text-white top-5 text-xl md:text-3xl font-bold bg-white bg-opacity-15 px-10'>Cat</h2>
                         </Link>
                     </SwiperSlide>
-
                     <SwiperSlide>
-                        <Link>
+                        <Link to="/category/Dog">
                             <img src={dog} alt="" />
                             <h2 className='absolute flex items-center justify-center z-10 text-white top-5 text-xl md:text-3xl font-bold bg-black bg-opacity-15 px-10'>Dog</h2>
                         </Link>
                     </SwiperSlide>
                     <SwiperSlide>
-                        <Link>
+                        <Link to="/category/Rabbit">
                             <img src={rabbit} alt="" />
                             <h2 className='absolute flex items-center justify-center z-10 text-white top-5 text-xl md:text-3xl font-bold bg-white bg-opacity-15 px-10'>Rabbit</h2>
                         </Link>
                     </SwiperSlide>
                     <SwiperSlide>
-                        <Link>
+                        <Link to="/category/Fish">
                             <img className='' src={fish} alt="" />
                             <h2 className='absolute flex items-center justify-center z-10 text-white top-5 text-xl md:text-3xl font-bold bg-white bg-opacity-15 px-10'>Fish</h2>
                         </Link>
                     </SwiperSlide>
                     <SwiperSlide>
-                        <Link>
+                        <Link to="/category/Bird">
                             <img src={bird} alt="" />
                             <h2 className='absolute flex items-center justify-center z-10 text-white top-5 text-xl md:text-3xl font-bold bg-white bg-opacity-15 px-10'>Bird</h2>
                         </Link>
                     </SwiperSlide>
-
                 </Swiper>
             </div>
-
         </div>
     );
 };

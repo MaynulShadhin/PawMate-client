@@ -35,7 +35,7 @@ const router = createBrowserRouter([
         element: <Home></Home>
       },
       {
-        path: "/pets/:category",
+        path: "/category/:categoryName",
         element: <PetsByCategory></PetsByCategory>
       },
       {

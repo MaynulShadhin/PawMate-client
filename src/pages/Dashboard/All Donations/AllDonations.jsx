@@ -74,7 +74,7 @@ const AllDonations = () => {
 
     return (
         <div>
-            <div className="container mx-auto px-4">
+            <div className="container mx-auto px-4 h-screen my-12">
                 <h2 className="text-2xl font-bold mb-4">All Donations</h2>
                 <table className="min-w-full divide-y divide-gray-200">
                     <thead className="bg-gray-50">
