@@ -2,7 +2,7 @@ import aboutUsImage from "../../../../assets/about us.jpg"
 const AboutUs = () => {
     return (
         <div>
-            <section className="bg-gray-100 py-12">
+            <section className="bg-[#F07C3D] bg-opacity-5 py-12">
                 <div className="container mx-auto px-4">
                     <div className="flex flex-col lg:flex-row items-center justify-between">
                         <div className="lg:w-1/2 mb-8 lg:mb-0">

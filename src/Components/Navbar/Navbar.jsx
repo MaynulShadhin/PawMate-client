@@ -26,7 +26,9 @@ const Navbar = () => {
         <NavLink to="/" className={({ isActive }) => isActive ? "text-lg mr-4 font-semi-bold border-b-2 border-[#F07C3D] text-[#F07C3D]" : "text-lg mr-4 font-semi-bold text-gray-700 hover:text-[#F07C3D]"}>Home</NavLink>
         <NavLink to="/pet-listing" className={({ isActive }) => isActive ? "text-lg mr-4 font-semi-bold border-b-2 border-[#F07C3D] text-[#F07C3D]" : "text-lg mr-4 font-semi-bold text-gray-700 hover:text-[#F07C3D]"}>Pet Listing</NavLink>
         <NavLink to="/donation-camp" className={({ isActive }) => isActive ? "text-lg mr-4 font-semi-bold border-b-2 border-[#F07C3D] text-[#F07C3D]" : "text-lg mr-4 font-semi-bold text-gray-700 hover:text-[#F07C3D]"}>Donation Campaigns</NavLink>
-        <button onClick={handleTheme} className="mr-3 bg-slate-500 text-white px-2 rounded-xl">Toggle Theme</button>
+        <button onClick={handleTheme} className="mr-3 bg-slate-500 text-white px-2 rounded-full">
+            {theme==="dark"? "Light": "Dark"}
+        </button>
     </>
 
     return (
