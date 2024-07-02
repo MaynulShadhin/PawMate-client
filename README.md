@@ -14,4 +14,27 @@ The platform provides a detailed pet listing page with search and filter options
 3. Efficient Donation Campaign Management:
 PawMate supports donation campaigns with a user-friendly interface. Campaigns are displayed in a grid layout with infinite scrolling, and the detailed donation page integrates with Stripe for secure transactions. Users can create, manage, and track donations efficiently through their dashboard.
 
+## Technologies Used:
+
+* React js
+* Tailwind css
+* Flowbite-react
+* Node js
+* Mongodb
+
+
+## Running the Project Locally
+
+If you want to clone and run the project locally, follow these steps:
+
+1. **Clone the repository:**
+git clone [repository URL]
+2. **Navigate into the project directory:**
+cd [project directory]
+3. **Install dependencies:**
+npm install
+4. **Start the development server:**
+npm run dev
+
+
 ## assignment12_category_0009
